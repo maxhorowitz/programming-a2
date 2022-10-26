@@ -40,8 +40,20 @@ def pop(s):
             let rev = list.reversed(s.stack):
                 result = list.head(rev)
                 s.stack = list.reversed(list.tail(rev))
+            s.size -= 1
+            if c == "(":
+                s.valid -= 1
+            elif c == ")":
+                s.valid += 1
+            if s.size == s.problem_index:
+                s.problem_index = -1
+                s.ever_negative = False
 
 def validate(s):
     atomically:
         if s.size == s.max_size:
             result = (s.ever_negative == false && s.problem_index == -1)
+        else:
+            while s.size < s.max_size:
+                pass
+            validate(s)
