@@ -1,0 +1,5 @@
+// READER GATE WOULD NEED PEOPLE WAITING THERE (AND THE CONDITION IS MET)
+// IF THIS IS NOT TRUE, IT RELEASES THE MUTEXT TO OPEN THE MAIN GATE
+def release_one(rw):
+    if the number of writers is zero and the gate's count is greater than zero
+    THE ABOVE: 

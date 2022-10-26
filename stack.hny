@@ -1,11 +1,15 @@
 import list
 
-def Stack():
-    result = []
+def Stack(l):
+    result = {.stack: [], .size: 0, .maxSize: l}
 
-def push(s, v):
+def push(s, c):
     atomically:
-        !s = list.append(!s, v)
+        if s.size < s.maxSize:
+            s->stack = list.append(s->stack, v)
+            s.size += 1
+        else:
+
 
 def pop(s):
     atomically:

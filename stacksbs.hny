@@ -6,10 +6,9 @@ def Stack(l):
   # return an empty stack with maximum size l
   result = {
     .size: 0, # how do we make sure the max size is l
-    .stackfull: l < size, # i think we can do this to always check if the stack is full
-    .stackempty: size == 0, #will return True is empty and False if not
+    .max_size: l, # capture maxSize parameter
     .valid: 0,#+1 to this when '(' and -1 when ')'
-    .evernegative: False, #whenever pushing, check after if valid is negative and if so make True
+    .ever_negative: False, #whenever pushing, check after if valid is negative and if so make True
     .mutex: BinSema(False), #main gate
     .push_gate: { .sema: BinSema(True), .count: 0 },
     .pop_gate: { .sema: BinSema(True), .count: 0 },
