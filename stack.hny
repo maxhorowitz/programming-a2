@@ -25,7 +25,8 @@ def push(s, c):
 def pop(s):
     atomically when s.size > 0:
         let rev = list.reversed(s.stack):
-            result = list.head(rev)
+            c = list.head(rev)
+            result = c
             s.stack = list.reversed(list.tail(rev))
         s.size -= 1
         if c == "(":
