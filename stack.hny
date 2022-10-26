@@ -1,25 +1,47 @@
 import list
 
 def Stack(l):
-    result = {.stack: [], .size: 0, .maxSize: l}
+    result = {
+        .stack: [],
+        .size: 0, # how do we make sure the max size is l
+        .max_size: l, # capture maxSize parameter
+        .valid: 0,#+1 to this when '(' and -1 when ')'
+        .ever_negative: False, #whenever pushing, check after if valid is negative and if so make True
+        .problem_index: -1,
+    }
 
 def push(s, c):
     atomically:
-        if s.size < s.maxSize:
-            s->stack = list.append(s->stack, v)
+        if s.size < s.max_size:
+            s.stack = list.append(s.stack, c)
             s.size += 1
+            if c == "(":
+                s.valid += 1
+            elif c == ")":
+                s.valid -= 1
+            if valid < 0:
+                s.ever_negative = True
+                s.problem_index = (s.size-1)
         else:
+            while s.size == s.max_size:
+                pass
+            push(s, c)
 
 
 def pop(s):
+    # STILL NEED TO ADD LOGIC TO DEAL WITH
+    # ever_negative AND problem_index.
     atomically:
-        if !s == []:
-            result = None
+        if s.stack == []:
+            while s.size == 0:
+                pass
+            pop(s)
         else:
-            let rev = list.reversed(!s):
+            let rev = list.reversed(s.stack):
                 result = list.head(rev)
-                !s = list.reversed(list.tail(rev))
+                s.stack = list.reversed(list.tail(rev))
 
-def reverse(s):
+def validate(s):
     atomically:
-        !s = list.reversed(!s)
+        if s.size == s.max_size:
+            result = (s.ever_negative == false && s.problem_index == -1)
