@@ -14,7 +14,7 @@ def Stack(l):
     .ncs: 0 #number of people in critical section
 
     # EVERYTHING HERE HAS TO DO WITH STACK:
-    .stack: {.top: None}
+    .stack: []
     .size: 0, # how do we make sure the max size is l
     .max_size: l, # capture maxSize parameter
     .valid: 0,#+1 to this when '(' and -1 when ')'
@@ -32,9 +32,7 @@ def push(s, c):
     ?s->push_gate.count -= 1
   ?s->ncs += 1
   # BEGIN push logic
-  let node = malloc({ .value: v, .next: None }):
-          node->next = s->top
-          s->top = node
+  s.stack = list.append(s.stack, c)
   # update stack auxillary variables
   s.size += 1
   if c == "(":
@@ -57,13 +55,9 @@ def pop(s):
     ?s->pop_gate.count -= 1
   ?s->ncs += 1
   # BEGIN pop logic
-  let node = s->top:
-      if s->top == None:
-          result = None
-      else:
-          result = s->top->value
-          s->top = s->top->next
-          free(node)
+  let rev = list.reversed(s.stack):
+            result = list.head(rev)
+            s.stack = list.reversed(list.tail(rev))
   # update stack auxillary variables
   s.size -= 1
   if c == "(":
