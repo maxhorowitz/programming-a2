@@ -5,16 +5,21 @@ from synch import BinSema, acquire, release
 def Stack(l):
   # return an empty stack with maximum size l
   result = {
-    .size: 0, # how do we make sure the max size is l
-    .max_size: l, # capture maxSize parameter
-    .valid: 0,#+1 to this when '(' and -1 when ')'
-    .ever_negative: False, #whenever pushing, check after if valid is negative and if so make True
+
+    # EVERYTHING HERE HAS TO DO WITH BINARY SEMAPHORE LOCKING:
     .mutex: BinSema(False), #main gate
     .push_gate: { .sema: BinSema(True), .count: 0 },
     .pop_gate: { .sema: BinSema(True), .count: 0 },
     .validate_gate: { .sema: BinSema(True), .count: 0 },
     .ncs: 0 #number of people in critical section
+
+    # EVERYTHING HERE HAS TO DO WITH STACK:
     .stack: {.top: None}
+    .size: 0, # how do we make sure the max size is l
+    .max_size: l, # capture maxSize parameter
+    .valid: 0,#+1 to this when '(' and -1 when ')'
+    .ever_negative: False, #whenever pushing, check after if valid is negative and if so make True
+
   }
 
 def push(s, c):
