@@ -13,18 +13,53 @@ def Stack(l):
     .push_gate: { .sema: BinSema(True), .count: 0 },
     .pop_gate: { .sema: BinSema(True), .count: 0 },
     .validate_gate: { .sema: BinSema(True), .count: 0 },
+    .ncs: 0 #number of people in critical section
   }
 
 def push(s, c):
   # wait until the stack is not full, then push c onto !s
+  acquire(?s->mutex)
+  if (?s->ncs > 0):
+    ?s->push_gate.count += 1
+    release_one(s)
+    acquire(?s->push_gate.sema)
+    ?s->push_gate.count -= 1
+    
+  ?s->ncs += 1
+  # push logic goes here
+
+  release_one(s)
 
 def pop(s):
   # wait until a stack is non-empty and then remove and return the top of the stack
+  acquire(?s->mutex)
+  if (?s->ncs > 0):
+    ?s->pop_gate.count += 1
+    release_one(s)
+    acquire(?s->pop_gate.sema)
+    ?s->pop_gate.count -= 1
+    
+  ?s->ncs += 1
+  # pop logic goes here
+
+  release_one(s)
 
 def validate(s):
   # wait until stack !s is full, then check if its valid
+  acquire(?s->mutex)
+  if (?s->ncs > 0):
+    ?s->validate_gate.count += 1
+    release_one(s)
+    acquire(?s->validate_gate.sema)
+    ?s->validate_gate.count -= 1
+
+  ?s->ncs += 1
+  # validation logic goes here
+
+  release_one(s)
 
 def release_one(?):
+  pass
 
 
 
