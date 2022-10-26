@@ -41,7 +41,7 @@ def pop(s):
     
   ?s->ncs += 1
   # pop logic goes here
-
+  
   release_one(s)
 
 def validate(s):
@@ -58,8 +58,15 @@ def validate(s):
 
   release_one(s)
 
-def release_one(?):
-  pass
+def release_one(s):
+  if (?s->ncs == 0 && ?s->size != ?s ->maxsize && ?s->push_gate.count > 0):
+    release(?s->push_gate.sema)
+  elif (?s->ncs == 0 && ?s->size != 0 && ?s->pop_gate.count > 0):
+    release(?s->pop_gate.sema)
+  elif (?s->ncs == 0 && ?s->size == ?s ->maxsize && ?s->validate_gate.count > 0):
+    release(?s->validate_gate.sema)
+  else:
+    release(?s->mutex)
 
 
 
