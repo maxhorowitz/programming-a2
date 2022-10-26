@@ -11,8 +11,8 @@ def Stack(l):
     }
 
 def push(s, c):
-    atomically:
-        if s.size < s.max_size:
+    if s.size < s.max_size:
+        atomically:
             s.stack = list.append(s.stack, c)
             s.size += 1
             if c == "(":
@@ -22,21 +22,19 @@ def push(s, c):
             if valid < 0:
                 s.ever_negative = True
                 s.problem_index = (s.size-1)
-        else:
-            while s.size == s.max_size:
-                pass
-            push(s, c)
+    else:
+        while s.size == s.max_size:
+            pass
+        push(s, c)
 
 
 def pop(s):
-    # STILL NEED TO ADD LOGIC TO DEAL WITH
-    # ever_negative AND problem_index.
-    atomically:
-        if s.stack == []:
-            while s.size == 0:
-                pass
-            pop(s)
-        else:
+    if s.stack == []:
+        while s.size == 0:
+            pass
+        pop(s)
+    else:
+        atomically:
             let rev = list.reversed(s.stack):
                 result = list.head(rev)
                 s.stack = list.reversed(list.tail(rev))
@@ -52,7 +50,7 @@ def pop(s):
 def validate(s):
     atomically:
         if s.size == s.max_size:
-            result = (s.ever_negative == false && s.problem_index == -1)
+            result = (s.ever_negative == false && s.valid == 0)
         else:
             while s.size < s.max_size:
                 pass
