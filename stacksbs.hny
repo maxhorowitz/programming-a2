@@ -1,0 +1,19 @@
+from synch import BinSema, acquire, release
+
+def Stack(l):
+  # return an empty stack with maximum size l
+
+def push(s, c):
+  # wait until the stack is not full, then push c onto !s
+
+def pop(s):
+  # wait until a stack is non-empty and then remove and return the top of the stack
+
+def validate(s):
+  # wait until stack !s is full, then check if its valid
+
+def release_one(?):
+
+
+
+
