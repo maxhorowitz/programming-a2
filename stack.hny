@@ -1,0 +1,21 @@
+import list
+
+def Stack():
+    result = []
+
+def push(s, v):
+    atomically:
+        !s = list.append(!s, v)
+
+def pop(s):
+    atomically:
+        if !s == []:
+            result = None
+        else:
+            let rev = list.reversed(!s):
+                result = list.head(rev)
+                !s = list.reversed(list.tail(rev))
+
+def reverse(s):
+    atomically:
+        !s = list.reversed(!s)
