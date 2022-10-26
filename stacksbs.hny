@@ -30,15 +30,21 @@ def push(s, c):
     release_one(s)
     acquire(?s->push_gate.sema)
     ?s->push_gate.count -= 1
-    
   ?s->ncs += 1
-
   # BEGIN push logic
   let node = malloc({ .value: v, .next: None }):
           node->next = s->top
           s->top = node
+  # update stack auxillary variables
+  s.size += 1
+  if c == "(":
+      s.valid += 1
+  elif c == ")":
+      s.valid -= 1
+  if valid < 0:
+      s.ever_negative = True
+      s.problem_index = (s.size-1)
   # END push logic
-
   release_one(s)
 
 def pop(s):
@@ -49,9 +55,7 @@ def pop(s):
     release_one(s)
     acquire(?s->pop_gate.sema)
     ?s->pop_gate.count -= 1
-    
   ?s->ncs += 1
-  
   # BEGIN pop logic
   let node = s->top:
       if s->top == None:
@@ -60,8 +64,16 @@ def pop(s):
           result = s->top->value
           s->top = s->top->next
           free(node)
+  # update stack auxillary variables
+  s.size -= 1
+  if c == "(":
+      s.valid -= 1
+  elif c == ")":
+      s.valid += 1
+  if s.size == s.problem_index:
+      s.problem_index = -1
+      s.ever_negative = False
   # END pop logic
-  
   release_one(s)
 
 def validate(s):
@@ -72,13 +84,10 @@ def validate(s):
     release_one(s)
     acquire(?s->validate_gate.sema)
     ?s->validate_gate.count -= 1
-
   ?s->ncs += 1
-  
   # BEGIN validation logic
-
+  result = (s.ever_negative == false && s.valid == 0)
   # END validation logic
-
   release_one(s)
 
 def release_one(s):
