@@ -14,6 +14,7 @@ def Stack(l):
     .pop_gate: { .sema: BinSema(True), .count: 0 },
     .validate_gate: { .sema: BinSema(True), .count: 0 },
     .ncs: 0 #number of people in critical section
+    .stack: {.top: None}
   }
 
 def push(s, c):
@@ -26,7 +27,12 @@ def push(s, c):
     ?s->push_gate.count -= 1
     
   ?s->ncs += 1
-  # push logic goes here
+
+  # BEGIN push logic
+  let node = malloc({ .value: v, .next: None }):
+          node->next = s->top
+          s->top = node
+  # END push logic
 
   release_one(s)
 
@@ -40,7 +46,16 @@ def pop(s):
     ?s->pop_gate.count -= 1
     
   ?s->ncs += 1
-  # pop logic goes here
+  
+  # BEGIN pop logic
+  let node = s->top:
+      if s->top == None:
+          result = None
+      else:
+          result = s->top->value
+          s->top = s->top->next
+          free(node)
+  # END pop logic
   
   release_one(s)
 
@@ -54,7 +69,10 @@ def validate(s):
     ?s->validate_gate.count -= 1
 
   ?s->ncs += 1
-  # validation logic goes here
+  
+  # BEGIN validation logic
+
+  # END validation logic
 
   release_one(s)
 
@@ -67,45 +85,3 @@ def release_one(s):
     release(?s->validate_gate.sema)
   else:
     release(?s->mutex)
-
-
-# from alloc import malloc, free
-# from synch import Lock, acquire, release
-
-# lock = synch.Lock()
-
-# def Stack():
-#     result = {.top: None, .lock: Lock()}
-
-# def push(s, v):
-#     let node = malloc({ .value: v, .next: None }):
-#         acquire(?s->lock)
-#         node->next = s->top
-#         s->top = node
-#         release(?s->lock)
-
-# def pop(s):
-#     acquire(?s->lock)
-#     let node = s->top:
-#         if s->top == None:
-#             result = None
-#         else:
-#             result = s->top->value
-#             s->top = s->top->next
-#             free(node)
-#     release(?s->lock)
-
-# def reverse(s):
-#     acquire(?s->lock)
-#     var current = s->top
-#     var previous = None
-#     var next = None
-#     while not (current == None):
-#         next = current->next
-#         current->next = previous
-#         previous = current
-#         current = next
-#     s->top = previous
-#     release(?s->lock)
-
-
