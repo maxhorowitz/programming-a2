@@ -1,0 +1,51 @@
+from synch import *
+
+def Stack(l):
+  # return an empty stack with maximum size l
+  result = {
+
+    # EVERYTHING HERE HAS TO DO WITH BINARY SEMAPHORE LOCKING:
+    .mutex: Lock()
+    .push_cond: False,
+    .pop_cond: False,
+    .validate_cond: False,
+    .ncs: 0 #number of people in critical section
+
+    # EVERYTHING HERE HAS TO DO WITH STACK:
+    .stack: []
+    .size: 0, # how do we make sure the max size is l
+    .max_size: l, # capture maxSize parameter
+    .valid: 0,#+1 to this when '(' and -1 when ')'
+    .ever_negative: False, #whenever pushing, check after if valid is negative and if so make True
+
+  }
+
+def push_acquire(s):
+    # acquire(?s->mutex)
+    # while s->ncs > 0:
+    #     wait(?s->push_cond, ?s->mutex)
+    # s->ncs += 1
+    # release(?s->mutex)
+
+def push_release(s):
+    # acquire(?s->mutex)
+    # s->ncs -= 1
+    # if s->ncs == 0:
+    #     notifyAll(?s->pop_cond)
+    #     notifyAll(?s->validate_cond)
+    # release(?s->mutex)
+
+def pop_acquire(s):
+    # acquire(?s->mutex)
+    # while s->ncs > 0:
+    #     wait(?s->pop_cond, ?s->mutex)
+    # s->ncs += 1
+    # release(?s->mutex)
+
+def pop_release(s):
+    # acquire(?s->mutex)
+    # s->ncs -= 1
+    # if s->ncs == 0:
+    #     notifyAll(?s->push_cond)
+    #     notifyAll(?s->validate_cond)
+    # release(?s->mutex)
