@@ -9,7 +9,6 @@ def Stack(l):
     .push_cond: Condition(),
     .pop_cond: Condition(),
     .valid_cond: Condition(),
-    .ncs: 0, #number of people in critical section
 
     # EVERYTHING HERE HAS TO DO WITH STACK:
     .stack: [],
@@ -26,7 +25,6 @@ def push(s, c):
     acquire(?s->mutex)
     while s->size >= s->max_size:
       wait(?s->push_cond, ?s->mutex)
-
     #push to stack
     s.stack = list.append(s.stack, c)
     # update stack auxillary variables

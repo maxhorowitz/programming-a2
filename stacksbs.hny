@@ -45,12 +45,11 @@ def push(s, c):
 def pop(s):
   # wait until a stack is non-empty and then remove and return the top of the stack
   acquire(?s->mutex)
-  if (?s->ncs > 0):
+  if s->size > 0:
     ?s->pop_gate.count += 1
     release_one(s)
     acquire(?s->pop_gate.sema)
     ?s->pop_gate.count -= 1
-  ?s->ncs += 1
   # BEGIN pop logic
   let rev = list.reversed(s.stack):
             c = list.head(rev)
@@ -71,12 +70,11 @@ def pop(s):
 def validate(s):
   # wait until stack !s is full, then check if its valid
   acquire(?s->mutex)
-  if (?s->ncs > 0):
+  if s->size == s->max_size:
     ?s->validate_gate.count += 1
     release_one(s)
     acquire(?s->validate_gate.sema)
     ?s->validate_gate.count -= 1
-  ?s->ncs += 1
   # BEGIN validation logic
   result = (s.ever_negative == false) and (s.valid == 0)
   # END validation logic
