@@ -79,20 +79,3 @@ def validate(s):
   result = (s.ever_negative == false and s.valid == 0)
   # END validation logic
   release(?s->mutex)
-
-
-  # def pop_release(s):
-#     acquire(?s->mutex)
-#     s->ncs -= 1
-#     if s->ncs == 0:
-#         notifyAll(?s->push_cond)
-#         notifyAll(?s->validate_cond)
-#     release(?s->mutex)
-
-# def push_release(s):
-#     acquire(?s->mutex)
-#     s->ncs -= 1
-#     if s->ncs == 0:
-#         notifyAll(?s->pop_cond)
-#         notifyAll(?s->validate_cond)
-#     release(?s->mutex)
