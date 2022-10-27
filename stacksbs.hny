@@ -37,7 +37,7 @@ def push(s, c):
       s->valid += 1
   elif c == ")":
       s->valid -= 1
-  if valid < 0:
+  if ((s->valid < 0) and (not (s->ever_negative))):
       s->ever_negative = True
       s->problem_index = (s->size-1)
   # END push logic
