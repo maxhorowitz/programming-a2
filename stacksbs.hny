@@ -47,7 +47,7 @@ def pop(s):
   acquire(?s->mutex)
   if s->size > 0:
     ?s->pop_gate.count += 1
-    release(?s->mutex)
+    release(?s->mutex)                                                            
     acquire(?s->pop_gate.sema)
     ?s->pop_gate.count -= 1
   # BEGIN pop logic

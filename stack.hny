@@ -5,7 +5,7 @@ def Stack(l):
         .stack: [],
         .size: 0, # how do we make sure the max size is l
         .max_size: l, # capture maxSize parameter
-        .valid: 0,#+1 to this when '(' and -1 when ')'
+        .valid: 0, #+1 to this when '(' and -1 when ')'
         .ever_negative: False, #whenever pushing, check after if valid is negative and if so make True
         .problem_index: -1
     }
