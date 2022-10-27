@@ -23,69 +23,68 @@ def Stack(l):
 def push(s, c):
   # wait until the stack is not full, then push c onto !s
   acquire(?s->mutex)
-  if s->size < s->max_size:
-    ?s->push_gate.count += 1
+  if ?s->size < ?s->max_size:
+    s->push_gate->count += 1
     release(?s->mutex)
-    acquire(?s->push_gate.sema)
-    ?s->push_gate.count -= 1
+    acquire(?s->push_gate->sema)
+    s->push_gate->count -= 1
   # BEGIN push logic
-  s.stack = list.append(s.stack, c)
+  s->stack = list.append(s->stack, c)
   # update stack auxillary variables
-  s.size += 1
+  s->size += 1
   if c == "(":
-      s.valid += 1
+      s->valid += 1
   elif c == ")":
-      s.valid -= 1
+      s->valid -= 1
   if valid < 0:
-      s.ever_negative = True
-      s.problem_index = (s.size-1)
+      s->ever_negative = True
+      s->problem_index = (s->size-1)
   # END push logic
   release_one(s)
 
 def pop(s):
   # wait until a stack is non-empty and then remove and return the top of the stack
   acquire(?s->mutex)
-  if s->size > 0:
-    ?s->pop_gate.count += 1
+  if ?s->size > 0:
+    s->pop_gate.count += 1
     release(?s->mutex)                                                            
-    acquire(?s->pop_gate.sema)
-    ?s->pop_gate.count -= 1
+    acquire(?s->pop_gate->sema)
+    s->pop_gate->count -= 1
   # BEGIN pop logic
-  let rev = list.reversed(s.stack):
-            c = list.head(rev)
-            result = c
-            s.stack = list.reversed(list.tail(rev))
-  # update stack auxillary variables
-  s.size -= 1
-  if c == "(":
-      s.valid -= 1
-  elif c == ")":
-      s.valid += 1
-  if s.size == s.problem_index:
-      s.problem_index = -1
-      s.ever_negative = False
+  let rev = list.reversed(?s->stack):
+      result = list.head(rev)
+      s->stack = list.reversed(list.tail(rev))
+      # update stack auxillary variables
+      s->size -= 1
+      if result == "(":
+          s->valid -= 1
+      elif result == ")":
+          s->valid += 1
+      if ?s->size == ?s->problem_index:
+          s->problem_index = -1
+          s->ever_negative = False
   # END pop logic
   release_one(s)
 
 def validate(s):
   # wait until stack !s is full, then check if its valid
   acquire(?s->mutex)
-  if s->size == s->max_size:
-    ?s->validate_gate.count += 1
+  if ?s->size == ?s->max_size:
+    s->validate_gate.count += 1
     release(?s->mutex)
-    acquire(?s->validate_gate.sema)
-    ?s->validate_gate.count -= 1
+    acquire(?s->validate_gate->sema)
+    s->validate_gate->count -= 1
   # BEGIN validation logic
-  result = (s.ever_negative == false) and (s.valid == 0)
+  result = ((?s->ever_negative == False) and (?s->valid == 0))
   # END validation logic
   release_one(s)
 
 def release_one(s):
-  if (?s->size != ?s ->maxsize) and (?s->push_gate.count > 0):
+  if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
     release(?s->push_gate.sema)
-  elif (?s->size != 0) and (?s->pop_gate.count > 0):
+  elif (?s->size != 0) and (?s->pop_gate->count > 0):
     release(?s->pop_gate.sema)
-  elif (?s->size == ?s ->maxsize) and (?s->validate_gate.count > 0):
+  elif (?s->size == ?s->max_size) and (?s->validate_gate->count > 0):
     release(?s->validate_gate.sema)
   else:
     release(?s->mutex)
