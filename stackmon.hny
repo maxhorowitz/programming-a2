@@ -38,9 +38,9 @@ def push(s, c):
         s.problem_index = (s.size-1)
         
     #release logic
-    notify(?s->push_cond)
     notify(?s->pop_cond)
-    notify(?s->valid_cond)
+    if s.size == s.max_size:
+        notify(?s->valid_cond)
     release(?s->mutex)
 
 
@@ -65,9 +65,7 @@ def pop(s):
         s.problem_index = -1
         s.ever_negative = False
     #release lock
-    notify(?s->pop_cond)
     notify(?s->push_cond)
-    notify(?s->valid_cond)
     release(?s->mutex)
 
 def validate(s):

@@ -11,32 +11,31 @@ def Stack(l):
     }
 
 def push(s, c):
-    atomically when s.size < s.max_size:
-        s.stack = list.append(s.stack, c)
-        s.size += 1
+    atomically when s->size < s->max_size:
+        s->stack = list.append(s->stack, c)
+        s->size += 1
         if c == "(":
-            s.valid += 1
+            s->valid += 1
         elif c == ")":
-            s.valid -= 1
-        if valid < 0:
-            s.ever_negative = True
-            s.problem_index = (s.size-1)
+            s->valid -= 1
+        if s->valid < 0:
+            s->ever_negative = True
+            s->problem_index = (s->size-1)
 
 def pop(s):
-    atomically when s.size > 0:
-        let rev = list.reversed(s.stack):
-            c = list.head(rev)
-            result = c
-            s.stack = list.reversed(list.tail(rev))
-        s.size -= 1
-        if c == "(":
-            s.valid -= 1
-        elif c == ")":
-            s.valid += 1
-        if s.size == s.problem_index:
-            s.problem_index = -1
-            s.ever_negative = False
+    atomically when s->size > 0:
+        let rev = list.reversed(s->stack):
+            result = list.head(rev)
+            s->stack = list.reversed(list.tail(rev))
+            s->size -= 1
+            if result == "(":
+                s->valid -= 1
+            elif result == ")":
+                s->valid += 1
+            if s->size == s->problem_index:
+                s->problem_index = -1
+                s->ever_negative = False
 
 def validate(s):
-    atomically when s.size == s.max_size:
-        result = (not s.ever_negative) and (s.valid == 0)
+    atomically when s->size == s->max_size:
+        result = (not s->ever_negative) and (s->valid == 0)
