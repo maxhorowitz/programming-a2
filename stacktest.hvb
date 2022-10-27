@@ -213,15 +213,15 @@ Step 22:
 
 Step 23:
   program counter:   492
-  hvm code:          Jump 1303
-  explanation:       jump over method definition: set program counter to 1303
+  hvm code:          Jump 1428
+  explanation:       jump over method definition: set program counter to 1428
   start statement:   line=50 column=1
   end statement:     line=50 column=20
   source code:       def remove(bg, elt):
                      ^^^
 
 Step 24:
-  program counter:   1303
+  program counter:   1428
   hvm code:          Push PC(944)
   explanation:       push program counter constant 944 ("Stack")
   file:              stacktest.hny
@@ -232,7 +232,7 @@ Step 24:
   stack:             [{:}, PC(944)]
 
 Step 25:
-  program counter:   1304
+  program counter:   1429
   hvm code:          Push 2
   explanation:       push constant 2
   source code:       s = stack.Stack(MAX_SIZE)
@@ -240,131 +240,85 @@ Step 25:
   stack:             [{:}, PC(944), 2]
 
 Step 26:
-  program counter:   1305
+  program counter:   1430
   hvm code:          Apply
   explanation:       pop an argument (2) and a program counter value (944: "Stack") and call the method
   source code:       s = stack.Stack(MAX_SIZE)
                          ^^^^^^^^^^^^^^^^^^^^^
   call trace:        __init__() --> Stack(2)
-  stack:             [{:}, 20898, 2]
+  stack:             [{:}, 22898, 2]
 
 Step 27:
   program counter:   944
   hvm code:          Frame Stack(l)
   explanation:       method "Stack" with argument l set to 2
-  file:              stackmon.hny
-  start statement:   line=3 column=1
-  end statement:     line=3 column=13
+  file:              stacksbs.hny
+  start statement:   line=4 column=1
+  end statement:     line=4 column=13
   source code:       def Stack(l):
                      ^^^^^^^^^^^^^
   method variables:  { l: 2, result: None }
-  stack:             [{:}, 20898, { "result": None }]
+  stack:             [{:}, 22898, { "result": None }]
 
 Step 28:
   program counter:   945
   hvm code:          DelVar result
   explanation:       delete method variable result
-  start statement:   line=5 column=3
-  end statement:     line=20 column=3
-  source code:       .mutex: Lock(),
+  start statement:   line=6 column=3
+  end statement:     line=22 column=3
+  source code:       .mutex: BinSema(False), #main gate
   method variables:  { l: 2 }
 
 Step 29:
   program counter:   946
   hvm code:          Push {:}
   explanation:       push constant {:}
-  start expression:  line=8 column=5
-  end expression:    line=19 column=22
-  stack:             [{:}, 20898, { "result": None }, {:}]
+  start expression:  line=9 column=5
+  end expression:    line=20 column=22
+  stack:             [{:}, 22898, { "result": None }, {:}]
 
 Step 30:
   program counter:   947
   hvm code:          Push "mutex"
   explanation:       push constant "mutex"
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex"]
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, {:}, "mutex"]
 
 Step 31:
   program counter:   948
-  hvm code:          Push PC(679)
-  explanation:       push program counter constant 679 ("Lock")
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", PC(679)]
+  hvm code:          Push PC(672)
+  explanation:       push program counter constant 672 ("BinSema")
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, {:}, "mutex", PC(672)]
 
 Step 32:
   program counter:   949
-  hvm code:          Push ()
-  explanation:       push constant ()
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", PC(679), []]
+  hvm code:          Push False
+  explanation:       push constant False
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, {:}, "mutex", PC(672), False]
 
 Step 33:
   program counter:   950
   hvm code:          Apply
-  explanation:       pop an argument ([]) and a program counter value (679: "Lock") and call the method
-  source code:       .mutex: Lock(),
-  call trace:        __init__() --> Stack(2) --> Lock()
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", 15218, []]
+  explanation:       pop an argument (False) and a program counter value (672: "BinSema") and call the method
+  source code:       .mutex: BinSema(False), #main gate
+  call trace:        __init__() --> Stack(2) --> BinSema(False)
+  stack:             [{:}, 22898, { "result": None }, {:}, "mutex", 15218, False]
 
 Step 34:
-  program counter:   679
-  hvm code:          Frame Lock()
-  explanation:       method "Lock" with argument () set to []
-  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
-  start statement:   line=24 column=1
-  end statement:     line=24 column=11
-  source code:       def Lock():
-                     ^^^^^^^^^^^
-  method variables:  { result: None }
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }]
-
-Step 35:
-  program counter:   680
-  hvm code:          DelVar result
-  explanation:       delete method variable result
-  start statement:   line=25 column=5
-  end statement:     line=25 column=27
-  source code:       result = BinSema(False)
-                              ^^^^^^^
-  method variables:  { }
-
-Step 36:
-  program counter:   681
-  hvm code:          Push PC(672)
-  explanation:       push program counter constant 672 ("BinSema")
-  start expression:  line=25 column=14
-  end expression:    line=25 column=20
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }, PC(672)]
-
-Step 37:
-  program counter:   682
-  hvm code:          Push False
-  explanation:       push constant False
-  source code:       result = BinSema(False)
-                                      ^^^^^
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }, PC(672), False]
-
-Step 38:
-  program counter:   683
-  hvm code:          Apply
-  explanation:       pop an argument (False) and a program counter value (672: "BinSema") and call the method
-  source code:       result = BinSema(False)
-                              ^^^^^^^^^^^^^^
-  call trace:        __init__() --> Stack(2) --> Lock() --> BinSema(False)
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }, 10946, False]
-
-Step 39:
   program counter:   672
   hvm code:          Frame BinSema(acquired)
   explanation:       method "BinSema" with argument acquired set to False
+  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
   start statement:   line=21 column=1
   end statement:     line=21 column=22
   source code:       def BinSema(acquired):
                      ^^^^^^^^^^^^^^^^^^^^^^
   method variables:  { acquired: False, result: None }
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }, 10946, {:}]
+  stack:             [{:}, 22898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }]
 
-Step 40:
+Step 35:
   program counter:   673
   hvm code:          DelVar result
   explanation:       delete method variable result
@@ -374,15 +328,15 @@ Step 40:
                               ^^^^^^^^
   method variables:  { acquired: False }
 
-Step 41:
+Step 36:
   program counter:   674
   hvm code:          LoadVar acquired
   explanation:       push value (False) of variable "acquired"
   start expression:  line=22 column=14
   end expression:    line=22 column=21
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }, 10946, {:}, False]
+  stack:             [{:}, 22898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }, False]
 
-Step 42:
+Step 37:
   program counter:   675
   hvm code:          DelVar acquired
   explanation:       delete method variable acquired
@@ -390,16 +344,16 @@ Step 42:
   end expression:    line=22 column=21
   method variables:  { }
 
-Step 43:
+Step 38:
   program counter:   676
   hvm code:          StoreVar result
   explanation:       pop value (False) and store locally in variable "result"
   source code:       result = acquired
                      ^^^^^^^^
   method variables:  { result: False }
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }, 10946, {:}]
+  stack:             [{:}, 22898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }]
 
-Step 44:
+Step 39:
   program counter:   677
   hvm code:          Return
   explanation:       push result (False) and restore method variables
@@ -407,703 +361,617 @@ Step 44:
   end statement:     line=21 column=22
   source code:       def BinSema(acquired):
                      ^^^^^^^^^^^^^^^^^^^^^^
-  method variables:  { }
-  call trace:        __init__() --> Stack(2) --> Lock()
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }, False]
-
-Step 45:
-  program counter:   684
-  hvm code:          StoreVar result
-  explanation:       pop value (False) and store locally in variable "result"
-  start statement:   line=25 column=5
-  end statement:     line=25 column=27
-  source code:       result = BinSema(False)
-                     ^^^^^^^^
-  method variables:  { result: False }
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", 15218, { "l": 2 }]
-
-Step 46:
-  program counter:   685
-  hvm code:          Return
-  explanation:       push result (False) and restore method variables
-  start statement:   line=24 column=1
-  end statement:     line=24 column=11
-  source code:       def Lock():
-                     ^^^^^^^^^^^
   method variables:  { l: 2 }
   call trace:        __init__() --> Stack(2)
-  stack:             [{:}, 20898, { "result": None }, {:}, "mutex", False]
+  stack:             [{:}, 22898, { "result": None }, {:}, "mutex", False]
 
-Step 47:
+Step 40:
   program counter:   951
   hvm code:          3-ary DictAdd
   explanation:       pop 3 values (False, "mutex", {:}); add key/value pair to dictionary; push result ({ "mutex": False })
-  file:              stackmon.hny
-  start statement:   line=5 column=3
-  end statement:     line=20 column=3
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }]
+  file:              stacksbs.hny
+  start statement:   line=6 column=3
+  end statement:     line=22 column=3
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }]
+
+Step 41:
+  program counter:   952
+  hvm code:          Push "push_gate"
+  explanation:       push constant "push_gate"
+  source code:       .push_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate"]
+
+Step 42:
+  program counter:   953
+  hvm code:          Push {:}
+  explanation:       push constant {:}
+  source code:       .push_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", {:}]
+
+Step 43:
+  program counter:   954
+  hvm code:          Push "sema"
+  explanation:       push constant "sema"
+  source code:       .push_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", {:}, "sema"]
+
+Step 44:
+  program counter:   955
+  hvm code:          Push PC(672)
+  explanation:       push program counter constant 672 ("BinSema")
+  source code:       .push_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", {:}, "sema", PC(672)]
+
+Step 45:
+  program counter:   956
+  hvm code:          Push True
+  explanation:       push constant True
+  source code:       .push_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", {:}, "sema", PC(672), True]
+
+Step 46:
+  program counter:   957
+  hvm code:          Apply
+  explanation:       pop an argument (True) and a program counter value (672: "BinSema") and call the method
+  source code:       .push_gate: { .sema: BinSema(True), .count: 0 },
+  call trace:        __init__() --> Stack(2) --> BinSema(True)
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", {:}, "sema", 15330, True]
+
+Step 47:
+  program counter:   672
+  hvm code:          Frame BinSema(acquired)
+  explanation:       method "BinSema" with argument acquired set to True
+  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
+  start statement:   line=21 column=1
+  end statement:     line=21 column=22
+  source code:       def BinSema(acquired):
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { acquired: True, result: None }
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", {:}, "sema", 15330, { "l": 2 }]
 
 Step 48:
-  program counter:   952
-  hvm code:          Push "push_cond"
-  explanation:       push constant "push_cond"
-  source code:       .push_cond: Condition(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond"]
+  program counter:   673
+  hvm code:          DelVar result
+  explanation:       delete method variable result
+  start statement:   line=22 column=5
+  end statement:     line=22 column=21
+  source code:       result = acquired
+                              ^^^^^^^^
+  method variables:  { acquired: True }
 
 Step 49:
-  program counter:   953
-  hvm code:          Push PC(738)
-  explanation:       push program counter constant 738 ("Condition")
-  source code:       .push_cond: Condition(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", PC(738)]
+  program counter:   674
+  hvm code:          LoadVar acquired
+  explanation:       push value (True) of variable "acquired"
+  start expression:  line=22 column=14
+  end expression:    line=22 column=21
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", {:}, "sema", 15330, { "l": 2 }, True]
 
 Step 50:
-  program counter:   954
-  hvm code:          Push ()
-  explanation:       push constant ()
-  source code:       .push_cond: Condition(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", PC(738), []]
+  program counter:   675
+  hvm code:          DelVar acquired
+  explanation:       delete method variable acquired
+  start expression:  line=22 column=14
+  end expression:    line=22 column=21
+  method variables:  { }
 
 Step 51:
-  program counter:   955
-  hvm code:          Apply
-  explanation:       pop an argument ([]) and a program counter value (738: "Condition") and call the method
-  source code:       .push_cond: Condition(),
-  call trace:        __init__() --> Stack(2) --> Condition()
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", 15298, []]
+  program counter:   676
+  hvm code:          StoreVar result
+  explanation:       pop value (True) and store locally in variable "result"
+  source code:       result = acquired
+                     ^^^^^^^^
+  method variables:  { result: True }
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", {:}, "sema", 15330, { "l": 2 }]
 
 Step 52:
-  program counter:   738
-  hvm code:          Frame Condition()
-  explanation:       method "Condition" with argument () set to []
-  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
-  start statement:   line=42 column=1
-  end statement:     line=42 column=16
-  source code:       def Condition():
-                     ^^^^^^^^^^^^^^^^
-  method variables:  { result: None }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", 15298, { "l": 2 }]
+  program counter:   677
+  hvm code:          Return
+  explanation:       push result (True) and restore method variables
+  start statement:   line=21 column=1
+  end statement:     line=21 column=22
+  source code:       def BinSema(acquired):
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { l: 2 }
+  call trace:        __init__() --> Stack(2)
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", {:}, "sema", True]
 
 Step 53:
-  program counter:   739
-  hvm code:          DelVar result
-  explanation:       delete method variable result
-  start statement:   line=43 column=5
-  end statement:     line=43 column=24
-  source code:       result = bag.empty()
-                              ^^^^^^^^^
-  method variables:  { }
+  program counter:   958
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values (True, "sema", {:}); add key/value pair to dictionary; push result ({ "sema": True })
+  file:              stacksbs.hny
+  start statement:   line=6 column=3
+  end statement:     line=22 column=3
+  source code:       .push_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", { "sema": True }]
 
 Step 54:
-  program counter:   740
-  hvm code:          Push PC(310)
-  explanation:       push program counter constant 310 ("empty")
-  start expression:  line=43 column=14
-  end expression:    line=43 column=22
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", 15298, { "l": 2 }, PC(310)]
+  program counter:   959
+  hvm code:          Push "count"
+  explanation:       push constant "count"
+  source code:       .push_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", { "sema": True }, "count"]
 
 Step 55:
-  program counter:   741
-  hvm code:          Push ()
-  explanation:       push constant ()
-  source code:       result = bag.empty()
-                                       ^^
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", 15298, { "l": 2 }, PC(310), []]
+  program counter:   960
+  hvm code:          Push 0
+  explanation:       push constant 0
+  source code:       .push_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", { "sema": True }, "count", 0]
 
 Step 56:
-  program counter:   742
-  hvm code:          Apply
-  explanation:       pop an argument ([]) and a program counter value (310: "empty") and call the method
-  source code:       result = bag.empty()
-                              ^^^^^^^^^^^
-  call trace:        __init__() --> Stack(2) --> Condition() --> empty()
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", 15298, { "l": 2 }, 11890, []]
-
-Step 57:
-  program counter:   310
-  hvm code:          Frame empty()
-  explanation:       method "empty" with argument () set to []
-  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/bag.hny
-  start statement:   line=1 column=1
-  end statement:     line=1 column=12
-  source code:       def empty():
-                     ^^^^^^^^^^^^
-  method variables:  { result: None }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", 15298, { "l": 2 }, 11890, {:}]
-
-Step 58:
-  program counter:   311
-  hvm code:          DelVar result
-  explanation:       delete method variable result
-  start statement:   line=2 column=5
-  end statement:     line=2 column=16
-  source code:       result = {:}
-                              ^^^
-  method variables:  { }
-
-Step 59:
-  program counter:   312
-  hvm code:          Push {:}
-  explanation:       push constant {:}
-  start expression:  line=2 column=14
-  end expression:    line=2 column=16
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", 15298, { "l": 2 }, 11890, {:}, {:}]
-
-Step 60:
-  program counter:   313
-  hvm code:          StoreVar result
-  explanation:       pop value ({:}) and store locally in variable "result"
-  source code:       result = {:}
-                     ^^^^^^^^
-  method variables:  { result: {:} }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", 15298, { "l": 2 }, 11890, {:}]
-
-Step 61:
-  program counter:   314
-  hvm code:          Return
-  explanation:       push result ({:}) and restore method variables
-  start statement:   line=1 column=1
-  end statement:     line=1 column=12
-  source code:       def empty():
-                     ^^^^^^^^^^^^
-  method variables:  { }
-  call trace:        __init__() --> Stack(2) --> Condition()
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", 15298, { "l": 2 }, {:}]
-
-Step 62:
-  program counter:   743
-  hvm code:          StoreVar result
-  explanation:       pop value ({:}) and store locally in variable "result"
-  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
-  start statement:   line=43 column=5
-  end statement:     line=43 column=24
-  source code:       result = bag.empty()
-                     ^^^^^^^^
-  method variables:  { result: {:} }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", 15298, { "l": 2 }]
-
-Step 63:
-  program counter:   744
-  hvm code:          Return
-  explanation:       push result ({:}) and restore method variables
-  start statement:   line=42 column=1
-  end statement:     line=42 column=16
-  source code:       def Condition():
-                     ^^^^^^^^^^^^^^^^
-  method variables:  { l: 2 }
-  call trace:        __init__() --> Stack(2)
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False }, "push_cond", {:}]
-
-Step 64:
-  program counter:   956
-  hvm code:          3-ary DictAdd
-  explanation:       pop 3 values ({:}, "push_cond", { "mutex": False }); add key/value pair to dictionary; push result ({ "mutex": False, "push_cond": {:} })
-  file:              stackmon.hny
-  start statement:   line=5 column=3
-  end statement:     line=20 column=3
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }]
-
-Step 65:
-  program counter:   957
-  hvm code:          Push "pop_cond"
-  explanation:       push constant "pop_cond"
-  source code:       .pop_cond: Condition(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond"]
-
-Step 66:
-  program counter:   958
-  hvm code:          Push PC(738)
-  explanation:       push program counter constant 738 ("Condition")
-  source code:       .pop_cond: Condition(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", PC(738)]
-
-Step 67:
-  program counter:   959
-  hvm code:          Push ()
-  explanation:       push constant ()
-  source code:       .pop_cond: Condition(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", PC(738), []]
-
-Step 68:
-  program counter:   960
-  hvm code:          Apply
-  explanation:       pop an argument ([]) and a program counter value (738: "Condition") and call the method
-  source code:       .pop_cond: Condition(),
-  call trace:        __init__() --> Stack(2) --> Condition()
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", 15378, []]
-
-Step 69:
-  program counter:   738
-  hvm code:          Frame Condition()
-  explanation:       method "Condition" with argument () set to []
-  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
-  start statement:   line=42 column=1
-  end statement:     line=42 column=16
-  source code:       def Condition():
-                     ^^^^^^^^^^^^^^^^
-  method variables:  { result: None }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", 15378, { "l": 2 }]
-
-Step 70:
-  program counter:   739
-  hvm code:          DelVar result
-  explanation:       delete method variable result
-  start statement:   line=43 column=5
-  end statement:     line=43 column=24
-  source code:       result = bag.empty()
-                              ^^^^^^^^^
-  method variables:  { }
-
-Step 71:
-  program counter:   740
-  hvm code:          Push PC(310)
-  explanation:       push program counter constant 310 ("empty")
-  start expression:  line=43 column=14
-  end expression:    line=43 column=22
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", 15378, { "l": 2 }, PC(310)]
-
-Step 72:
-  program counter:   741
-  hvm code:          Push ()
-  explanation:       push constant ()
-  source code:       result = bag.empty()
-                                       ^^
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", 15378, { "l": 2 }, PC(310), []]
-
-Step 73:
-  program counter:   742
-  hvm code:          Apply
-  explanation:       pop an argument ([]) and a program counter value (310: "empty") and call the method
-  source code:       result = bag.empty()
-                              ^^^^^^^^^^^
-  call trace:        __init__() --> Stack(2) --> Condition() --> empty()
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", 15378, { "l": 2 }, 11890, []]
-
-Step 74:
-  program counter:   310
-  hvm code:          Frame empty()
-  explanation:       method "empty" with argument () set to []
-  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/bag.hny
-  start statement:   line=1 column=1
-  end statement:     line=1 column=12
-  source code:       def empty():
-                     ^^^^^^^^^^^^
-  method variables:  { result: None }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", 15378, { "l": 2 }, 11890, {:}]
-
-Step 75:
-  program counter:   311
-  hvm code:          DelVar result
-  explanation:       delete method variable result
-  start statement:   line=2 column=5
-  end statement:     line=2 column=16
-  source code:       result = {:}
-                              ^^^
-  method variables:  { }
-
-Step 76:
-  program counter:   312
-  hvm code:          Push {:}
-  explanation:       push constant {:}
-  start expression:  line=2 column=14
-  end expression:    line=2 column=16
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", 15378, { "l": 2 }, 11890, {:}, {:}]
-
-Step 77:
-  program counter:   313
-  hvm code:          StoreVar result
-  explanation:       pop value ({:}) and store locally in variable "result"
-  source code:       result = {:}
-                     ^^^^^^^^
-  method variables:  { result: {:} }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", 15378, { "l": 2 }, 11890, {:}]
-
-Step 78:
-  program counter:   314
-  hvm code:          Return
-  explanation:       push result ({:}) and restore method variables
-  start statement:   line=1 column=1
-  end statement:     line=1 column=12
-  source code:       def empty():
-                     ^^^^^^^^^^^^
-  method variables:  { }
-  call trace:        __init__() --> Stack(2) --> Condition()
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", 15378, { "l": 2 }, {:}]
-
-Step 79:
-  program counter:   743
-  hvm code:          StoreVar result
-  explanation:       pop value ({:}) and store locally in variable "result"
-  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
-  start statement:   line=43 column=5
-  end statement:     line=43 column=24
-  source code:       result = bag.empty()
-                     ^^^^^^^^
-  method variables:  { result: {:} }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", 15378, { "l": 2 }]
-
-Step 80:
-  program counter:   744
-  hvm code:          Return
-  explanation:       push result ({:}) and restore method variables
-  start statement:   line=42 column=1
-  end statement:     line=42 column=16
-  source code:       def Condition():
-                     ^^^^^^^^^^^^^^^^
-  method variables:  { l: 2 }
-  call trace:        __init__() --> Stack(2)
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "push_cond": {:} }, "pop_cond", {:}]
-
-Step 81:
   program counter:   961
   hvm code:          3-ary DictAdd
-  explanation:       pop 3 values ({:}, "pop_cond", { "mutex": False, "push_cond": {:} }); add key/value pair to dictionary; push result ({ "mutex": False, "pop_cond": {:}, "push_cond": {:} })
-  file:              stackmon.hny
-  start statement:   line=5 column=3
-  end statement:     line=20 column=3
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }]
+  explanation:       pop 3 values (0, "count", { "sema": True }); add key/value pair to dictionary; push result ({ "count": 0, "sema": True })
+  source code:       .push_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False }, "push_gate", { "count": 0, "sema": True }]
 
-Step 82:
+Step 57:
   program counter:   962
-  hvm code:          Push "valid_cond"
-  explanation:       push constant "valid_cond"
-  source code:       .valid_cond: Condition(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond"]
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values ({ "count": 0, "sema": True }, "push_gate", { "mutex": False }); add key/value pair to dictionary; push result ({ "mutex": False, "push_gate": { "count": 0, "sema": True } })
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }]
 
-Step 83:
+Step 58:
   program counter:   963
-  hvm code:          Push PC(738)
-  explanation:       push program counter constant 738 ("Condition")
-  source code:       .valid_cond: Condition(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", PC(738)]
+  hvm code:          Push "pop_gate"
+  explanation:       push constant "pop_gate"
+  source code:       .pop_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate"]
 
-Step 84:
+Step 59:
   program counter:   964
-  hvm code:          Push ()
-  explanation:       push constant ()
-  source code:       .valid_cond: Condition(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", PC(738), []]
-
-Step 85:
-  program counter:   965
-  hvm code:          Apply
-  explanation:       pop an argument ([]) and a program counter value (738: "Condition") and call the method
-  source code:       .valid_cond: Condition(),
-  call trace:        __init__() --> Stack(2) --> Condition()
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", 15458, []]
-
-Step 86:
-  program counter:   738
-  hvm code:          Frame Condition()
-  explanation:       method "Condition" with argument () set to []
-  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
-  start statement:   line=42 column=1
-  end statement:     line=42 column=16
-  source code:       def Condition():
-                     ^^^^^^^^^^^^^^^^
-  method variables:  { result: None }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", 15458, { "l": 2 }]
-
-Step 87:
-  program counter:   739
-  hvm code:          DelVar result
-  explanation:       delete method variable result
-  start statement:   line=43 column=5
-  end statement:     line=43 column=24
-  source code:       result = bag.empty()
-                              ^^^^^^^^^
-  method variables:  { }
-
-Step 88:
-  program counter:   740
-  hvm code:          Push PC(310)
-  explanation:       push program counter constant 310 ("empty")
-  start expression:  line=43 column=14
-  end expression:    line=43 column=22
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", 15458, { "l": 2 }, PC(310)]
-
-Step 89:
-  program counter:   741
-  hvm code:          Push ()
-  explanation:       push constant ()
-  source code:       result = bag.empty()
-                                       ^^
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", 15458, { "l": 2 }, PC(310), []]
-
-Step 90:
-  program counter:   742
-  hvm code:          Apply
-  explanation:       pop an argument ([]) and a program counter value (310: "empty") and call the method
-  source code:       result = bag.empty()
-                              ^^^^^^^^^^^
-  call trace:        __init__() --> Stack(2) --> Condition() --> empty()
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", 15458, { "l": 2 }, 11890, []]
-
-Step 91:
-  program counter:   310
-  hvm code:          Frame empty()
-  explanation:       method "empty" with argument () set to []
-  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/bag.hny
-  start statement:   line=1 column=1
-  end statement:     line=1 column=12
-  source code:       def empty():
-                     ^^^^^^^^^^^^
-  method variables:  { result: None }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", 15458, { "l": 2 }, 11890, {:}]
-
-Step 92:
-  program counter:   311
-  hvm code:          DelVar result
-  explanation:       delete method variable result
-  start statement:   line=2 column=5
-  end statement:     line=2 column=16
-  source code:       result = {:}
-                              ^^^
-  method variables:  { }
-
-Step 93:
-  program counter:   312
   hvm code:          Push {:}
   explanation:       push constant {:}
-  start expression:  line=2 column=14
-  end expression:    line=2 column=16
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", 15458, { "l": 2 }, 11890, {:}, {:}]
+  source code:       .pop_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", {:}]
 
-Step 94:
-  program counter:   313
-  hvm code:          StoreVar result
-  explanation:       pop value ({:}) and store locally in variable "result"
-  source code:       result = {:}
-                     ^^^^^^^^
-  method variables:  { result: {:} }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", 15458, { "l": 2 }, 11890, {:}]
+Step 60:
+  program counter:   965
+  hvm code:          Push "sema"
+  explanation:       push constant "sema"
+  source code:       .pop_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", {:}, "sema"]
 
-Step 95:
-  program counter:   314
-  hvm code:          Return
-  explanation:       push result ({:}) and restore method variables
-  start statement:   line=1 column=1
-  end statement:     line=1 column=12
-  source code:       def empty():
-                     ^^^^^^^^^^^^
-  method variables:  { }
-  call trace:        __init__() --> Stack(2) --> Condition()
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", 15458, { "l": 2 }, {:}]
+Step 61:
+  program counter:   966
+  hvm code:          Push PC(672)
+  explanation:       push program counter constant 672 ("BinSema")
+  source code:       .pop_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", {:}, "sema", PC(672)]
 
-Step 96:
-  program counter:   743
-  hvm code:          StoreVar result
-  explanation:       pop value ({:}) and store locally in variable "result"
+Step 62:
+  program counter:   967
+  hvm code:          Push True
+  explanation:       push constant True
+  source code:       .pop_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", {:}, "sema", PC(672), True]
+
+Step 63:
+  program counter:   968
+  hvm code:          Apply
+  explanation:       pop an argument (True) and a program counter value (672: "BinSema") and call the method
+  source code:       .pop_gate: { .sema: BinSema(True), .count: 0 },
+  call trace:        __init__() --> Stack(2) --> BinSema(True)
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", {:}, "sema", 15506, True]
+
+Step 64:
+  program counter:   672
+  hvm code:          Frame BinSema(acquired)
+  explanation:       method "BinSema" with argument acquired set to True
   file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
-  start statement:   line=43 column=5
-  end statement:     line=43 column=24
-  source code:       result = bag.empty()
-                     ^^^^^^^^
-  method variables:  { result: {:} }
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", 15458, { "l": 2 }]
+  start statement:   line=21 column=1
+  end statement:     line=21 column=22
+  source code:       def BinSema(acquired):
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { acquired: True, result: None }
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", {:}, "sema", 15506, { "l": 2 }]
 
-Step 97:
-  program counter:   744
+Step 65:
+  program counter:   673
+  hvm code:          DelVar result
+  explanation:       delete method variable result
+  start statement:   line=22 column=5
+  end statement:     line=22 column=21
+  source code:       result = acquired
+                              ^^^^^^^^
+  method variables:  { acquired: True }
+
+Step 66:
+  program counter:   674
+  hvm code:          LoadVar acquired
+  explanation:       push value (True) of variable "acquired"
+  start expression:  line=22 column=14
+  end expression:    line=22 column=21
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", {:}, "sema", 15506, { "l": 2 }, True]
+
+Step 67:
+  program counter:   675
+  hvm code:          DelVar acquired
+  explanation:       delete method variable acquired
+  start expression:  line=22 column=14
+  end expression:    line=22 column=21
+  method variables:  { }
+
+Step 68:
+  program counter:   676
+  hvm code:          StoreVar result
+  explanation:       pop value (True) and store locally in variable "result"
+  source code:       result = acquired
+                     ^^^^^^^^
+  method variables:  { result: True }
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", {:}, "sema", 15506, { "l": 2 }]
+
+Step 69:
+  program counter:   677
   hvm code:          Return
-  explanation:       push result ({:}) and restore method variables
-  start statement:   line=42 column=1
-  end statement:     line=42 column=16
-  source code:       def Condition():
-                     ^^^^^^^^^^^^^^^^
+  explanation:       push result (True) and restore method variables
+  start statement:   line=21 column=1
+  end statement:     line=21 column=22
+  source code:       def BinSema(acquired):
+                     ^^^^^^^^^^^^^^^^^^^^^^
   method variables:  { l: 2 }
   call trace:        __init__() --> Stack(2)
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:} }, "valid_cond", {:}]
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", {:}, "sema", True]
 
-Step 98:
-  program counter:   966
-  hvm code:          3-ary DictAdd
-  explanation:       pop 3 values ({:}, "valid_cond", { "mutex": False, "pop_cond": {:}, "push_cond": {:} }); add key/value pair to dictionary; push result ({ "mutex": False, "pop_cond": {:}, "push_cond": {:}, "valid_cond": {:} })
-  file:              stackmon.hny
-  start statement:   line=5 column=3
-  end statement:     line=20 column=3
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "valid_cond": {:} }]
-
-Step 99:
-  program counter:   967
-  hvm code:          Push "stack"
-  explanation:       push constant "stack"
-  source code:       .stack: [],
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "valid_cond": {:} }, "stack"]
-
-Step 100:
-  program counter:   968
-  hvm code:          Push ()
-  explanation:       push constant ()
-  source code:       .stack: [],
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "valid_cond": {:} }, "stack", []]
-
-Step 101:
+Step 70:
   program counter:   969
   hvm code:          3-ary DictAdd
-  explanation:       pop 3 values ([], "stack", { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "valid_cond": {:} }); add key/value pair to dictionary; push result ({ "mutex": False, "pop_cond": {:}, "push_cond": {:}, "stack": [], "valid_cond": {:} })
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "stack": [], "valid_cond": {:} }]
+  explanation:       pop 3 values (True, "sema", {:}); add key/value pair to dictionary; push result ({ "sema": True })
+  file:              stacksbs.hny
+  start statement:   line=6 column=3
+  end statement:     line=22 column=3
+  source code:       .pop_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", { "sema": True }]
 
-Step 102:
+Step 71:
   program counter:   970
-  hvm code:          Push "size"
-  explanation:       push constant "size"
-  source code:       .size: 0, # how do we make sure the max size is l
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "stack": [], "valid_cond": {:} }, "size"]
+  hvm code:          Push "count"
+  explanation:       push constant "count"
+  source code:       .pop_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", { "sema": True }, "count"]
 
-Step 103:
+Step 72:
   program counter:   971
   hvm code:          Push 0
   explanation:       push constant 0
-  source code:       .size: 0, # how do we make sure the max size is l
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "stack": [], "valid_cond": {:} }, "size", 0]
+  source code:       .pop_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", { "sema": True }, "count", 0]
 
-Step 104:
+Step 73:
   program counter:   972
   hvm code:          3-ary DictAdd
-  explanation:       pop 3 values (0, "size", { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "stack": [], "valid_cond": {:} }); add key/value pair to dictionary; push result ({ "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid_cond": {:} })
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid_cond": {:} }]
+  explanation:       pop 3 values (0, "count", { "sema": True }); add key/value pair to dictionary; push result ({ "count": 0, "sema": True })
+  source code:       .pop_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "push_gate": { "count": 0, "sema": True } }, "pop_gate", { "count": 0, "sema": True }]
 
-Step 105:
+Step 74:
   program counter:   973
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values ({ "count": 0, "sema": True }, "pop_gate", { "mutex": False, "push_gate": { "count": 0, "sema": True } }); add key/value pair to dictionary; push result ({ "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } })
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }]
+
+Step 75:
+  program counter:   974
+  hvm code:          Push "validate_gate"
+  explanation:       push constant "validate_gate"
+  source code:       .validate_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate"]
+
+Step 76:
+  program counter:   975
+  hvm code:          Push {:}
+  explanation:       push constant {:}
+  source code:       .validate_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", {:}]
+
+Step 77:
+  program counter:   976
+  hvm code:          Push "sema"
+  explanation:       push constant "sema"
+  source code:       .validate_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", {:}, "sema"]
+
+Step 78:
+  program counter:   977
+  hvm code:          Push PC(672)
+  explanation:       push program counter constant 672 ("BinSema")
+  source code:       .validate_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", {:}, "sema", PC(672)]
+
+Step 79:
+  program counter:   978
+  hvm code:          Push True
+  explanation:       push constant True
+  source code:       .validate_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", {:}, "sema", PC(672), True]
+
+Step 80:
+  program counter:   979
+  hvm code:          Apply
+  explanation:       pop an argument (True) and a program counter value (672: "BinSema") and call the method
+  source code:       .validate_gate: { .sema: BinSema(True), .count: 0 },
+  call trace:        __init__() --> Stack(2) --> BinSema(True)
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", {:}, "sema", 15682, True]
+
+Step 81:
+  program counter:   672
+  hvm code:          Frame BinSema(acquired)
+  explanation:       method "BinSema" with argument acquired set to True
+  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
+  start statement:   line=21 column=1
+  end statement:     line=21 column=22
+  source code:       def BinSema(acquired):
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { acquired: True, result: None }
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", {:}, "sema", 15682, { "l": 2 }]
+
+Step 82:
+  program counter:   673
+  hvm code:          DelVar result
+  explanation:       delete method variable result
+  start statement:   line=22 column=5
+  end statement:     line=22 column=21
+  source code:       result = acquired
+                              ^^^^^^^^
+  method variables:  { acquired: True }
+
+Step 83:
+  program counter:   674
+  hvm code:          LoadVar acquired
+  explanation:       push value (True) of variable "acquired"
+  start expression:  line=22 column=14
+  end expression:    line=22 column=21
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", {:}, "sema", 15682, { "l": 2 }, True]
+
+Step 84:
+  program counter:   675
+  hvm code:          DelVar acquired
+  explanation:       delete method variable acquired
+  start expression:  line=22 column=14
+  end expression:    line=22 column=21
+  method variables:  { }
+
+Step 85:
+  program counter:   676
+  hvm code:          StoreVar result
+  explanation:       pop value (True) and store locally in variable "result"
+  source code:       result = acquired
+                     ^^^^^^^^
+  method variables:  { result: True }
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", {:}, "sema", 15682, { "l": 2 }]
+
+Step 86:
+  program counter:   677
+  hvm code:          Return
+  explanation:       push result (True) and restore method variables
+  start statement:   line=21 column=1
+  end statement:     line=21 column=22
+  source code:       def BinSema(acquired):
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { l: 2 }
+  call trace:        __init__() --> Stack(2)
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", {:}, "sema", True]
+
+Step 87:
+  program counter:   980
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values (True, "sema", {:}); add key/value pair to dictionary; push result ({ "sema": True })
+  file:              stacksbs.hny
+  start statement:   line=6 column=3
+  end statement:     line=22 column=3
+  source code:       .validate_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", { "sema": True }]
+
+Step 88:
+  program counter:   981
+  hvm code:          Push "count"
+  explanation:       push constant "count"
+  source code:       .validate_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", { "sema": True }, "count"]
+
+Step 89:
+  program counter:   982
+  hvm code:          Push 0
+  explanation:       push constant 0
+  source code:       .validate_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", { "sema": True }, "count", 0]
+
+Step 90:
+  program counter:   983
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values (0, "count", { "sema": True }); add key/value pair to dictionary; push result ({ "count": 0, "sema": True })
+  source code:       .validate_gate: { .sema: BinSema(True), .count: 0 },
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }, "validate_gate", { "count": 0, "sema": True }]
+
+Step 91:
+  program counter:   984
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values ({ "count": 0, "sema": True }, "validate_gate", { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True } }); add key/value pair to dictionary; push result ({ "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "validate_gate": { "count": 0, "sema": True } })
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "validate_gate": { "count": 0, "sema": True } }]
+
+Step 92:
+  program counter:   985
+  hvm code:          Push "stack"
+  explanation:       push constant "stack"
+  source code:       .stack: [],
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "validate_gate": { "count": 0, "sema": True } }, "stack"]
+
+Step 93:
+  program counter:   986
+  hvm code:          Push ()
+  explanation:       push constant ()
+  source code:       .stack: [],
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "validate_gate": { "count": 0, "sema": True } }, "stack", []]
+
+Step 94:
+  program counter:   987
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values ([], "stack", { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "validate_gate": { "count": 0, "sema": True } }); add key/value pair to dictionary; push result ({ "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "stack": [], "validate_gate": { "count": 0, "sema": True } })
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "stack": [], "validate_gate": { "count": 0, "sema": True } }]
+
+Step 95:
+  program counter:   988
+  hvm code:          Push "size"
+  explanation:       push constant "size"
+  source code:       .size: 0, # how do we make sure the max size is l
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "stack": [], "validate_gate": { "count": 0, "sema": True } }, "size"]
+
+Step 96:
+  program counter:   989
+  hvm code:          Push 0
+  explanation:       push constant 0
+  source code:       .size: 0, # how do we make sure the max size is l
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "stack": [], "validate_gate": { "count": 0, "sema": True } }, "size", 0]
+
+Step 97:
+  program counter:   990
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values (0, "size", { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "stack": [], "validate_gate": { "count": 0, "sema": True } }); add key/value pair to dictionary; push result ({ "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "validate_gate": { "count": 0, "sema": True } })
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "validate_gate": { "count": 0, "sema": True } }]
+
+Step 98:
+  program counter:   991
   hvm code:          Push "max_size"
   explanation:       push constant "max_size"
   source code:       .max_size: l, # capture maxSize parameter
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid_cond": {:} }, "max_size"]
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "validate_gate": { "count": 0, "sema": True } }, "max_size"]
 
-Step 106:
-  program counter:   974
+Step 99:
+  program counter:   992
   hvm code:          LoadVar l
   explanation:       push value (2) of variable "l"
   source code:       .max_size: l, # capture maxSize parameter
-  stack:             [{:}, 20898, { "result": None }, { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid_cond": {:} }, "max_size", 2]
+  stack:             [{:}, 22898, { "result": None }, { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "validate_gate": { "count": 0, "sema": True } }, "max_size", 2]
 
-Step 107:
-  program counter:   975
+Step 100:
+  program counter:   993
   hvm code:          DelVar l
   explanation:       delete method variable l
-  start expression:  line=16 column=16
-  end expression:    line=16 column=16
+  start expression:  line=17 column=16
+  end expression:    line=17 column=16
   method variables:  { }
 
-Step 108:
-  program counter:   976
+Step 101:
+  program counter:   994
   hvm code:          3-ary DictAdd
-  explanation:       pop 3 values (2, "max_size", { "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid_cond": {:} }); add key/value pair to dictionary; push result ({ "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid_cond": {:} })
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, { "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid_cond": {:} }]
+  explanation:       pop 3 values (2, "max_size", { "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "validate_gate": { "count": 0, "sema": True } }); add key/value pair to dictionary; push result ({ "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "validate_gate": { "count": 0, "sema": True } })
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, { "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "validate_gate": { "count": 0, "sema": True } }]
 
-Step 109:
-  program counter:   977
+Step 102:
+  program counter:   995
   hvm code:          Push "valid"
   explanation:       push constant "valid"
   source code:       .valid: 0,#+1 to this when '(' and -1 when ')'
-  stack:             [{:}, 20898, { "result": None }, { "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid_cond": {:} }, "valid"]
+  stack:             [{:}, 22898, { "result": None }, { "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "validate_gate": { "count": 0, "sema": True } }, "valid"]
 
-Step 110:
-  program counter:   978
+Step 103:
+  program counter:   996
   hvm code:          Push 0
   explanation:       push constant 0
   source code:       .valid: 0,#+1 to this when '(' and -1 when ')'
-  stack:             [{:}, 20898, { "result": None }, { "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid_cond": {:} }, "valid", 0]
+  stack:             [{:}, 22898, { "result": None }, { "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "validate_gate": { "count": 0, "sema": True } }, "valid", 0]
 
-Step 111:
-  program counter:   979
+Step 104:
+  program counter:   997
   hvm code:          3-ary DictAdd
-  explanation:       pop 3 values (0, "valid", { "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid_cond": {:} }); add key/value pair to dictionary; push result ({ "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} })
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, { "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }]
+  explanation:       pop 3 values (0, "valid", { "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "validate_gate": { "count": 0, "sema": True } }); add key/value pair to dictionary; push result ({ "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } })
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, { "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }]
 
-Step 112:
-  program counter:   980
+Step 105:
+  program counter:   998
   hvm code:          Push "ever_negative"
   explanation:       push constant "ever_negative"
   source code:       .ever_negative: False, #whenever pushing, check after if valid is negative and if so make True
-  stack:             [{:}, 20898, { "result": None }, { "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }, "ever_negative"]
+  stack:             [{:}, 22898, { "result": None }, { "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }, "ever_negative"]
 
-Step 113:
-  program counter:   981
+Step 106:
+  program counter:   999
   hvm code:          Push False
   explanation:       push constant False
   source code:       .ever_negative: False, #whenever pushing, check after if valid is negative and if so make True
-  stack:             [{:}, 20898, { "result": None }, { "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }, "ever_negative", False]
+  stack:             [{:}, 22898, { "result": None }, { "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }, "ever_negative", False]
 
-Step 114:
-  program counter:   982
+Step 107:
+  program counter:   1000
   hvm code:          3-ary DictAdd
-  explanation:       pop 3 values (False, "ever_negative", { "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }); add key/value pair to dictionary; push result ({ "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} })
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, { "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }]
+  explanation:       pop 3 values (False, "ever_negative", { "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }); add key/value pair to dictionary; push result ({ "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } })
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, { "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }]
 
-Step 115:
-  program counter:   983
+Step 108:
+  program counter:   1001
   hvm code:          Push "problem_index"
   explanation:       push constant "problem_index"
   source code:       .problem_index: -1
-  stack:             [{:}, 20898, { "result": None }, { "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }, "problem_index"]
+  stack:             [{:}, 22898, { "result": None }, { "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }, "problem_index"]
 
-Step 116:
-  program counter:   984
+Step 109:
+  program counter:   1002
   hvm code:          Push -1
   explanation:       push constant -1
   source code:       .problem_index: -1
-  stack:             [{:}, 20898, { "result": None }, { "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }, "problem_index", -1]
+  stack:             [{:}, 22898, { "result": None }, { "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }, "problem_index", -1]
 
-Step 117:
-  program counter:   985
+Step 110:
+  program counter:   1003
   hvm code:          3-ary DictAdd
-  explanation:       pop 3 values (-1, "problem_index", { "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }); add key/value pair to dictionary; push result ({ "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} })
-  source code:       .mutex: Lock(),
-  stack:             [{:}, 20898, { "result": None }, { "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }]
+  explanation:       pop 3 values (-1, "problem_index", { "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }); add key/value pair to dictionary; push result ({ "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } })
+  source code:       .mutex: BinSema(False), #main gate
+  stack:             [{:}, 22898, { "result": None }, { "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }]
 
-Step 118:
-  program counter:   986
+Step 111:
+  program counter:   1004
   hvm code:          StoreVar result
-  explanation:       pop value ({ "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }) and store locally in variable "result"
+  explanation:       pop value ({ "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }) and store locally in variable "result"
   source code:       result = {
-  method variables:  { result: { "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} } }
-  stack:             [{:}, 20898, { "result": None }]
+  method variables:  { result: { "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } } }
+  stack:             [{:}, 22898, { "result": None }]
 
-Step 119:
-  program counter:   987
+Step 112:
+  program counter:   1005
   hvm code:          Return
-  explanation:       push result ({ "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }) and restore method variables
-  start statement:   line=3 column=1
-  end statement:     line=3 column=13
+  explanation:       push result ({ "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }) and restore method variables
+  start statement:   line=4 column=1
+  end statement:     line=4 column=13
   source code:       def Stack(l):
                      ^^^^^^^^^^^^^
   method variables:  { result: None }
   call trace:        __init__()
-  stack:             [{:}, { "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }]
+  stack:             [{:}, { "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }]
 
-Step 120:
-  program counter:   1306
+Step 113:
+  program counter:   1431
   hvm code:          Store s
-  explanation:       pop value ({ "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }) and store into variable s
+  explanation:       pop value ({ "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }) and store into variable s
   file:              stacktest.hny
   start statement:   line=7 column=1
   end statement:     line=7 column=25
   source code:       s = stack.Stack(MAX_SIZE)
                      ^^^
-  shared variables:  { s: { "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} } }
+  shared variables:  { s: { "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } } }
   stack:             [{:}]
 
-Step 121:
-  program counter:   1307
-  hvm code:          Jump 1373
-  explanation:       jump over method definition: set program counter to 1373
+Step 114:
+  program counter:   1432
+  hvm code:          Jump 1498
+  explanation:       jump over method definition: set program counter to 1498
   start statement:   line=9 column=1
   end statement:     line=9 column=26
   source code:       def push_test(self, char):
                      ^^^
 
-Step 122:
-  program counter:   1373
+Step 115:
+  program counter:   1498
   hvm code:          Push { 1, 2 }
   explanation:       push constant { 1, 2 }
   start statement:   line=26 column=1
@@ -1112,16 +980,16 @@ Step 122:
                                ^^^^^^^^^^^^^
   stack:             [{:}, { 1, 2 }]
 
-Step 123:
-  program counter:   1374
+Step 116:
+  program counter:   1499
   hvm code:          Push 0
   explanation:       push constant 0
   source code:       for i in {1..NPUSH_OPEN}:
                      ^^^
   stack:             [{:}, { 1, 2 }, 0]
 
-Step 124:
-  program counter:   1375
+Step 117:
+  program counter:   1500
   hvm code:          Cut(i)
   explanation:       pop index (0) and value ({ 1, 2 }); assign value (1) to i; push new index (1) and True
   start expression:  line=26 column=1
@@ -1129,99 +997,99 @@ Step 124:
   method variables:  { i: 1, result: None }
   stack:             [{:}, { 1, 2 }, 1, True]
 
-Step 125:
-  program counter:   1376
-  hvm code:          JumpCond False 1387
-  explanation:       pop value (True), compare to False, and jump to 1387 if the same
+Step 118:
+  program counter:   1501
+  hvm code:          JumpCond False 1512
+  explanation:       pop value (True), compare to False, and jump to 1512 if the same
   start expression:  line=26 column=1
   end expression:    line=26 column=3
   stack:             [{:}, { 1, 2 }, 1]
 
-Step 126:
-  program counter:   1377
-  hvm code:          Push PC(1308)
-  explanation:       push program counter constant 1308 ("push_test")
+Step 119:
+  program counter:   1502
+  hvm code:          Push PC(1433)
+  explanation:       push program counter constant 1433 ("push_test")
   start statement:   line=27 column=5
   end statement:     line=27 column=27
   source code:       spawn push_test(i, "(")
                            ^^^^^^^^^
-  stack:             [{:}, { 1, 2 }, 1, PC(1308)]
+  stack:             [{:}, { 1, 2 }, 1, PC(1433)]
 
-Step 127:
-  program counter:   1378
+Step 120:
+  program counter:   1503
   hvm code:          Push ()
   explanation:       building a tuple: push constant ()
   source code:       spawn push_test(i, "(")
                                      ^^^^^^
-  stack:             [{:}, { 1, 2 }, 1, PC(1308), []]
+  stack:             [{:}, { 1, 2 }, 1, PC(1433), []]
 
-Step 128:
-  program counter:   1379
+Step 121:
+  program counter:   1504
   hvm code:          LoadVar i
   explanation:       push value (1) of variable "i"
   source code:       spawn push_test(i, "(")
                                      ^
-  stack:             [{:}, { 1, 2 }, 1, PC(1308), [], 1]
+  stack:             [{:}, { 1, 2 }, 1, PC(1433), [], 1]
 
-Step 129:
-  program counter:   1380
+Step 122:
+  program counter:   1505
   hvm code:          DelVar i
   explanation:       delete method variable i
   start expression:  line=27 column=21
   end expression:    line=27 column=21
   method variables:  { result: None }
 
-Step 130:
-  program counter:   1381
+Step 123:
+  program counter:   1506
   hvm code:          2-ary ListAdd
   explanation:       pop 2 values (1, []); insert first value into the second; push result ([1])
   source code:       spawn push_test(i, "(")
                                      ^^^^^^
-  stack:             [{:}, { 1, 2 }, 1, PC(1308), [ 1 ]]
+  stack:             [{:}, { 1, 2 }, 1, PC(1433), [ 1 ]]
 
-Step 131:
-  program counter:   1382
+Step 124:
+  program counter:   1507
   hvm code:          Push "("
   explanation:       push constant "("
   source code:       spawn push_test(i, "(")
                                         ^^^
-  stack:             [{:}, { 1, 2 }, 1, PC(1308), [ 1 ], "("]
+  stack:             [{:}, { 1, 2 }, 1, PC(1433), [ 1 ], "("]
 
-Step 132:
-  program counter:   1383
+Step 125:
+  program counter:   1508
   hvm code:          2-ary ListAdd
   explanation:       pop 2 values ("(", [1]); insert first value into the second; push result ([1, "("])
   source code:       spawn push_test(i, "(")
                                      ^^^^^^
-  stack:             [{:}, { 1, 2 }, 1, PC(1308), [ 1, "(" ]]
+  stack:             [{:}, { 1, 2 }, 1, PC(1433), [ 1, "(" ]]
 
-Step 133:
-  program counter:   1384
+Step 126:
+  program counter:   1509
   hvm code:          Push {:}
   explanation:       push constant {:}
   source code:       spawn push_test(i, "(")
                      ^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, { 1, 2 }, 1, PC(1308), [ 1, "(" ], {:}]
+  stack:             [{:}, { 1, 2 }, 1, PC(1433), [ 1, "(" ], {:}]
 
-Step 134:
-  program counter:   1385
+Step 127:
+  program counter:   1510
   hvm code:          Spawn
-  explanation:       pop thread-local state ({:}), argument ([1, "("]), and program counter (1308: "push_test"), and spawn thread
+  explanation:       pop thread-local state ({:}), argument ([1, "("]), and program counter (1433: "push_test"), and spawn thread
   start expression:  line=27 column=5
   end expression:    line=27 column=27
   stack:             [{:}, { 1, 2 }, 1]
 
-Step 135:
-  program counter:   1386
-  hvm code:          Jump 1375
-  explanation:       set program counter to 1375
+Step 128:
+  program counter:   1511
+  hvm code:          Jump 1500
+  explanation:       set program counter to 1500
   start statement:   line=26 column=1
   end statement:     line=26 column=24
   source code:       for i in {1..NPUSH_OPEN}:
                                             ^
 
-Step 136:
-  program counter:   1375
+Step 129:
+  program counter:   1500
   hvm code:          Cut(i)
   explanation:       pop index (1) and value ({ 1, 2 }); assign value (2) to i; push new index (2) and True
   source code:       for i in {1..NPUSH_OPEN}:
@@ -1229,115 +1097,115 @@ Step 136:
   method variables:  { i: 2, result: None }
   stack:             [{:}, { 1, 2 }, 2, True]
 
-Step 137:
-  program counter:   1376
-  hvm code:          JumpCond False 1387
-  explanation:       pop value (True), compare to False, and jump to 1387 if the same
+Step 130:
+  program counter:   1501
+  hvm code:          JumpCond False 1512
+  explanation:       pop value (True), compare to False, and jump to 1512 if the same
   start expression:  line=26 column=1
   end expression:    line=26 column=3
   stack:             [{:}, { 1, 2 }, 2]
 
-Step 138:
-  program counter:   1377
-  hvm code:          Push PC(1308)
-  explanation:       push program counter constant 1308 ("push_test")
+Step 131:
+  program counter:   1502
+  hvm code:          Push PC(1433)
+  explanation:       push program counter constant 1433 ("push_test")
   start statement:   line=27 column=5
   end statement:     line=27 column=27
   source code:       spawn push_test(i, "(")
                            ^^^^^^^^^
-  stack:             [{:}, { 1, 2 }, 2, PC(1308)]
+  stack:             [{:}, { 1, 2 }, 2, PC(1433)]
 
-Step 139:
-  program counter:   1378
+Step 132:
+  program counter:   1503
   hvm code:          Push ()
   explanation:       building a tuple: push constant ()
   source code:       spawn push_test(i, "(")
                                      ^^^^^^
-  stack:             [{:}, { 1, 2 }, 2, PC(1308), []]
+  stack:             [{:}, { 1, 2 }, 2, PC(1433), []]
 
-Step 140:
-  program counter:   1379
+Step 133:
+  program counter:   1504
   hvm code:          LoadVar i
   explanation:       push value (2) of variable "i"
   source code:       spawn push_test(i, "(")
                                      ^
-  stack:             [{:}, { 1, 2 }, 2, PC(1308), [], 2]
+  stack:             [{:}, { 1, 2 }, 2, PC(1433), [], 2]
 
-Step 141:
-  program counter:   1380
+Step 134:
+  program counter:   1505
   hvm code:          DelVar i
   explanation:       delete method variable i
   start expression:  line=27 column=21
   end expression:    line=27 column=21
   method variables:  { result: None }
 
-Step 142:
-  program counter:   1381
+Step 135:
+  program counter:   1506
   hvm code:          2-ary ListAdd
   explanation:       pop 2 values (2, []); insert first value into the second; push result ([2])
   source code:       spawn push_test(i, "(")
                                      ^^^^^^
-  stack:             [{:}, { 1, 2 }, 2, PC(1308), [ 2 ]]
+  stack:             [{:}, { 1, 2 }, 2, PC(1433), [ 2 ]]
 
-Step 143:
-  program counter:   1382
+Step 136:
+  program counter:   1507
   hvm code:          Push "("
   explanation:       push constant "("
   source code:       spawn push_test(i, "(")
                                         ^^^
-  stack:             [{:}, { 1, 2 }, 2, PC(1308), [ 2 ], "("]
+  stack:             [{:}, { 1, 2 }, 2, PC(1433), [ 2 ], "("]
 
-Step 144:
-  program counter:   1383
+Step 137:
+  program counter:   1508
   hvm code:          2-ary ListAdd
   explanation:       pop 2 values ("(", [2]); insert first value into the second; push result ([2, "("])
   source code:       spawn push_test(i, "(")
                                      ^^^^^^
-  stack:             [{:}, { 1, 2 }, 2, PC(1308), [ 2, "(" ]]
+  stack:             [{:}, { 1, 2 }, 2, PC(1433), [ 2, "(" ]]
 
-Step 145:
-  program counter:   1384
+Step 138:
+  program counter:   1509
   hvm code:          Push {:}
   explanation:       push constant {:}
   source code:       spawn push_test(i, "(")
                      ^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, { 1, 2 }, 2, PC(1308), [ 2, "(" ], {:}]
+  stack:             [{:}, { 1, 2 }, 2, PC(1433), [ 2, "(" ], {:}]
 
-Step 146:
-  program counter:   1385
+Step 139:
+  program counter:   1510
   hvm code:          Spawn
-  explanation:       pop thread-local state ({:}), argument ([2, "("]), and program counter (1308: "push_test"), and spawn thread
+  explanation:       pop thread-local state ({:}), argument ([2, "("]), and program counter (1433: "push_test"), and spawn thread
   start expression:  line=27 column=5
   end expression:    line=27 column=27
   stack:             [{:}, { 1, 2 }, 2]
 
-Step 147:
-  program counter:   1386
-  hvm code:          Jump 1375
-  explanation:       set program counter to 1375
+Step 140:
+  program counter:   1511
+  hvm code:          Jump 1500
+  explanation:       set program counter to 1500
   start statement:   line=26 column=1
   end statement:     line=26 column=24
   source code:       for i in {1..NPUSH_OPEN}:
                                             ^
 
-Step 148:
-  program counter:   1375
+Step 141:
+  program counter:   1500
   hvm code:          Cut(i)
   explanation:       pop index (2) and value ({ 1, 2 }); out of range -> push False
   source code:       for i in {1..NPUSH_OPEN}:
                      ^^^
   stack:             [{:}, False]
 
-Step 149:
-  program counter:   1376
-  hvm code:          JumpCond False 1387
-  explanation:       pop value (False), compare to False, and jump to 1387 if the same
+Step 142:
+  program counter:   1501
+  hvm code:          JumpCond False 1512
+  explanation:       pop value (False), compare to False, and jump to 1512 if the same
   start expression:  line=26 column=1
   end expression:    line=26 column=3
   stack:             [{:}]
 
-Step 150:
-  program counter:   1387
+Step 143:
+  program counter:   1512
   hvm code:          DelVar i
   explanation:       delete method variable i
   start statement:   line=28 column=1
@@ -1345,24 +1213,24 @@ Step 150:
   source code:       for i in {1..NPUSH_CLOSE}:
                                ^^^^^^^^^^^^^^
 
-Step 151:
-  program counter:   1388
+Step 144:
+  program counter:   1513
   hvm code:          Push { 1 }
   explanation:       push constant { 1 }
   start expression:  line=28 column=11
   end expression:    line=28 column=24
   stack:             [{:}, { 1 }]
 
-Step 152:
-  program counter:   1389
+Step 145:
+  program counter:   1514
   hvm code:          Push 0
   explanation:       push constant 0
   source code:       for i in {1..NPUSH_CLOSE}:
                      ^^^
   stack:             [{:}, { 1 }, 0]
 
-Step 153:
-  program counter:   1390
+Step 146:
+  program counter:   1515
   hvm code:          Cut(i)
   explanation:       pop index (0) and value ({ 1 }); assign value (1) to i; push new index (1) and True
   start expression:  line=28 column=1
@@ -1370,115 +1238,115 @@ Step 153:
   method variables:  { i: 1, result: None }
   stack:             [{:}, { 1 }, 1, True]
 
-Step 154:
-  program counter:   1391
-  hvm code:          JumpCond False 1402
-  explanation:       pop value (True), compare to False, and jump to 1402 if the same
+Step 147:
+  program counter:   1516
+  hvm code:          JumpCond False 1527
+  explanation:       pop value (True), compare to False, and jump to 1527 if the same
   start expression:  line=28 column=1
   end expression:    line=28 column=3
   stack:             [{:}, { 1 }, 1]
 
-Step 155:
-  program counter:   1392
-  hvm code:          Push PC(1308)
-  explanation:       push program counter constant 1308 ("push_test")
+Step 148:
+  program counter:   1517
+  hvm code:          Push PC(1433)
+  explanation:       push program counter constant 1433 ("push_test")
   start statement:   line=29 column=5
   end statement:     line=29 column=27
   source code:       spawn push_test(i, ")")
                            ^^^^^^^^^
-  stack:             [{:}, { 1 }, 1, PC(1308)]
+  stack:             [{:}, { 1 }, 1, PC(1433)]
 
-Step 156:
-  program counter:   1393
+Step 149:
+  program counter:   1518
   hvm code:          Push ()
   explanation:       building a tuple: push constant ()
   source code:       spawn push_test(i, ")")
                                      ^^^^^^
-  stack:             [{:}, { 1 }, 1, PC(1308), []]
+  stack:             [{:}, { 1 }, 1, PC(1433), []]
 
-Step 157:
-  program counter:   1394
+Step 150:
+  program counter:   1519
   hvm code:          LoadVar i
   explanation:       push value (1) of variable "i"
   source code:       spawn push_test(i, ")")
                                      ^
-  stack:             [{:}, { 1 }, 1, PC(1308), [], 1]
+  stack:             [{:}, { 1 }, 1, PC(1433), [], 1]
 
-Step 158:
-  program counter:   1395
+Step 151:
+  program counter:   1520
   hvm code:          DelVar i
   explanation:       delete method variable i
   start expression:  line=29 column=21
   end expression:    line=29 column=21
   method variables:  { result: None }
 
-Step 159:
-  program counter:   1396
+Step 152:
+  program counter:   1521
   hvm code:          2-ary ListAdd
   explanation:       pop 2 values (1, []); insert first value into the second; push result ([1])
   source code:       spawn push_test(i, ")")
                                      ^^^^^^
-  stack:             [{:}, { 1 }, 1, PC(1308), [ 1 ]]
+  stack:             [{:}, { 1 }, 1, PC(1433), [ 1 ]]
 
-Step 160:
-  program counter:   1397
+Step 153:
+  program counter:   1522
   hvm code:          Push ")"
   explanation:       push constant ")"
   source code:       spawn push_test(i, ")")
                                         ^^^
-  stack:             [{:}, { 1 }, 1, PC(1308), [ 1 ], ")"]
+  stack:             [{:}, { 1 }, 1, PC(1433), [ 1 ], ")"]
 
-Step 161:
-  program counter:   1398
+Step 154:
+  program counter:   1523
   hvm code:          2-ary ListAdd
   explanation:       pop 2 values (")", [1]); insert first value into the second; push result ([1, ")"])
   source code:       spawn push_test(i, ")")
                                      ^^^^^^
-  stack:             [{:}, { 1 }, 1, PC(1308), [ 1, ")" ]]
+  stack:             [{:}, { 1 }, 1, PC(1433), [ 1, ")" ]]
 
-Step 162:
-  program counter:   1399
+Step 155:
+  program counter:   1524
   hvm code:          Push {:}
   explanation:       push constant {:}
   source code:       spawn push_test(i, ")")
                      ^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, { 1 }, 1, PC(1308), [ 1, ")" ], {:}]
+  stack:             [{:}, { 1 }, 1, PC(1433), [ 1, ")" ], {:}]
 
-Step 163:
-  program counter:   1400
+Step 156:
+  program counter:   1525
   hvm code:          Spawn
-  explanation:       pop thread-local state ({:}), argument ([1, ")"]), and program counter (1308: "push_test"), and spawn thread
+  explanation:       pop thread-local state ({:}), argument ([1, ")"]), and program counter (1433: "push_test"), and spawn thread
   start expression:  line=29 column=5
   end expression:    line=29 column=27
   stack:             [{:}, { 1 }, 1]
 
-Step 164:
-  program counter:   1401
-  hvm code:          Jump 1390
-  explanation:       set program counter to 1390
+Step 157:
+  program counter:   1526
+  hvm code:          Jump 1515
+  explanation:       set program counter to 1515
   start statement:   line=28 column=1
   end statement:     line=28 column=25
   source code:       for i in {1..NPUSH_CLOSE}:
                                              ^
 
-Step 165:
-  program counter:   1390
+Step 158:
+  program counter:   1515
   hvm code:          Cut(i)
   explanation:       pop index (1) and value ({ 1 }); out of range -> push False
   source code:       for i in {1..NPUSH_CLOSE}:
                      ^^^
   stack:             [{:}, False]
 
-Step 166:
-  program counter:   1391
-  hvm code:          JumpCond False 1402
-  explanation:       pop value (False), compare to False, and jump to 1402 if the same
+Step 159:
+  program counter:   1516
+  hvm code:          JumpCond False 1527
+  explanation:       pop value (False), compare to False, and jump to 1527 if the same
   start expression:  line=28 column=1
   end expression:    line=28 column=3
   stack:             [{:}]
 
-Step 167:
-  program counter:   1402
+Step 160:
+  program counter:   1527
   hvm code:          DelVar i
   explanation:       delete method variable i
   start statement:   line=30 column=1
@@ -1486,24 +1354,24 @@ Step 167:
   source code:       for i in {1..NPOP}:
                                ^^^^^^^
 
-Step 168:
-  program counter:   1403
+Step 161:
+  program counter:   1528
   hvm code:          Push { 1 }
   explanation:       push constant { 1 }
   start expression:  line=30 column=11
   end expression:    line=30 column=17
   stack:             [{:}, { 1 }]
 
-Step 169:
-  program counter:   1404
+Step 162:
+  program counter:   1529
   hvm code:          Push 0
   explanation:       push constant 0
   source code:       for i in {1..NPOP}:
                      ^^^
   stack:             [{:}, { 1 }, 0]
 
-Step 170:
-  program counter:   1405
+Step 163:
+  program counter:   1530
   hvm code:          Cut(i)
   explanation:       pop index (0) and value ({ 1 }); assign value (1) to i; push new index (1) and True
   start expression:  line=30 column=1
@@ -1511,83 +1379,83 @@ Step 170:
   method variables:  { i: 1, result: None }
   stack:             [{:}, { 1 }, 1, True]
 
-Step 171:
-  program counter:   1406
-  hvm code:          JumpCond False 1413
-  explanation:       pop value (True), compare to False, and jump to 1413 if the same
+Step 164:
+  program counter:   1531
+  hvm code:          JumpCond False 1538
+  explanation:       pop value (True), compare to False, and jump to 1538 if the same
   start expression:  line=30 column=1
   end expression:    line=30 column=3
   stack:             [{:}, { 1 }, 1]
 
-Step 172:
-  program counter:   1407
-  hvm code:          Push PC(1337)
-  explanation:       push program counter constant 1337 ("pop_test")
+Step 165:
+  program counter:   1532
+  hvm code:          Push PC(1462)
+  explanation:       push program counter constant 1462 ("pop_test")
   start statement:   line=31 column=5
   end statement:     line=31 column=21
   source code:       spawn pop_test(i)
                            ^^^^^^^^
-  stack:             [{:}, { 1 }, 1, PC(1337)]
+  stack:             [{:}, { 1 }, 1, PC(1462)]
 
-Step 173:
-  program counter:   1408
+Step 166:
+  program counter:   1533
   hvm code:          LoadVar i
   explanation:       push value (1) of variable "i"
   source code:       spawn pop_test(i)
                                     ^
-  stack:             [{:}, { 1 }, 1, PC(1337), 1]
+  stack:             [{:}, { 1 }, 1, PC(1462), 1]
 
-Step 174:
-  program counter:   1409
+Step 167:
+  program counter:   1534
   hvm code:          DelVar i
   explanation:       delete method variable i
   start expression:  line=31 column=20
   end expression:    line=31 column=20
   method variables:  { result: None }
 
-Step 175:
-  program counter:   1410
+Step 168:
+  program counter:   1535
   hvm code:          Push {:}
   explanation:       push constant {:}
   source code:       spawn pop_test(i)
                      ^^^^^^^^^^^^^^^^^
-  stack:             [{:}, { 1 }, 1, PC(1337), 1, {:}]
+  stack:             [{:}, { 1 }, 1, PC(1462), 1, {:}]
 
-Step 176:
-  program counter:   1411
+Step 169:
+  program counter:   1536
   hvm code:          Spawn
-  explanation:       pop thread-local state ({:}), argument (1), and program counter (1337: "pop_test"), and spawn thread
+  explanation:       pop thread-local state ({:}), argument (1), and program counter (1462: "pop_test"), and spawn thread
   start expression:  line=31 column=5
   end expression:    line=31 column=21
   stack:             [{:}, { 1 }, 1]
 
-Step 177:
-  program counter:   1412
-  hvm code:          Jump 1405
-  explanation:       set program counter to 1405
+Step 170:
+  program counter:   1537
+  hvm code:          Jump 1530
+  explanation:       set program counter to 1530
   start statement:   line=30 column=1
   end statement:     line=30 column=18
   source code:       for i in {1..NPOP}:
                                       ^
 
-Step 178:
-  program counter:   1405
+Step 171:
+  program counter:   1530
   hvm code:          Cut(i)
   explanation:       pop index (1) and value ({ 1 }); out of range -> push False
   source code:       for i in {1..NPOP}:
                      ^^^
   stack:             [{:}, False]
 
-Step 179:
-  program counter:   1406
-  hvm code:          JumpCond False 1413
-  explanation:       pop value (False), compare to False, and jump to 1413 if the same
+Step 172:
+  program counter:   1531
+  hvm code:          JumpCond False 1538
+  explanation:       pop value (False), compare to False, and jump to 1538 if the same
   start expression:  line=30 column=1
   end expression:    line=30 column=3
   stack:             [{:}]
 
-Step 180:
-  program counter:   1413
+Step 173:
+  program counter:   1538
   hvm code:          DelVar i
   explanation:       delete method variable i
   start statement:   line=33 column=1
@@ -1595,40 +1463,40 @@ Step 180:
   source code:       spawn validate_test()
                            ^^^^^^^^^^^^^
 
-Step 181:
-  program counter:   1414
-  hvm code:          Push PC(1360)
-  explanation:       push program counter constant 1360 ("validate_test")
+Step 174:
+  program counter:   1539
+  hvm code:          Push PC(1485)
+  explanation:       push program counter constant 1485 ("validate_test")
   start expression:  line=33 column=7
   end expression:    line=33 column=19
-  stack:             [{:}, PC(1360)]
+  stack:             [{:}, PC(1485)]
 
-Step 182:
-  program counter:   1415
+Step 175:
+  program counter:   1540
   hvm code:          Push ()
   explanation:       push constant ()
   source code:       spawn validate_test()
                                         ^^
-  stack:             [{:}, PC(1360), []]
+  stack:             [{:}, PC(1485), []]
 
-Step 183:
-  program counter:   1416
+Step 176:
+  program counter:   1541
   hvm code:          Push {:}
   explanation:       push constant {:}
   source code:       spawn validate_test()
                      ^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, PC(1360), [], {:}]
+  stack:             [{:}, PC(1485), [], {:}]
 
-Step 184:
-  program counter:   1417
+Step 177:
+  program counter:   1542
   hvm code:          Spawn
-  explanation:       pop thread-local state ({:}), argument ([]), and program counter (1360: "validate_test"), and spawn thread
+  explanation:       pop thread-local state ({:}), argument ([]), and program counter (1485: "validate_test"), and spawn thread
   start expression:  line=33 column=1
   end expression:    line=33 column=21
   stack:             [{:}]
 
-Step 185:
-  program counter:   1418
+Step 178:
+  program counter:   1543
   hvm code:          Return
   explanation:       push result (None) and restore method variables
   start statement:   line=1 column=1
@@ -1639,214 +1507,142 @@ Step 185:
   stack:             []
 
 ================================================
-Running thread T2: push_test(2, "(")
+Running thread T5: validate_test()
 mode:  runnable
-stack: ['[ 2, "(" ]']
+stack: ['[]']
 other threads:
-  T0: pc=1418 terminated atomic __init__()
-  T1: pc=1308 runnable push_test(1, "(")
-  T3: pc=1308 runnable push_test(1, ")")
-  T4: pc=1337 runnable pop_test(1)
-  T5: pc=1360 runnable validate_test()
+  T0: pc=1543 terminated atomic __init__()
+  T1: pc=1433 runnable push_test(1, "(")
+  T2: pc=1433 runnable push_test(2, "(")
+  T3: pc=1433 runnable push_test(1, ")")
+  T4: pc=1462 runnable pop_test(1)
 shared variables:
-  s: { "ever_negative": False, "max_size": 2, "mutex": False, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }
-state id: 5
+  s: { "ever_negative": False, "max_size": 2, "mutex": False, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }
+state id: 2
 ================================================
 
-Step 186:
-  program counter:   1308
-  hvm code:          Frame push_test(self, char)
-  explanation:       method "push_test" with argument (self, char) set to [2, "("]
-  start statement:   line=9 column=1
-  end statement:     line=9 column=26
-  source code:       def push_test(self, char):
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  method variables:  { char: "(", result: None, self: 2 }
-  call trace:        push_test(2, "(")
+Step 179:
+  program counter:   1485
+  hvm code:          Frame validate_test()
+  explanation:       method "validate_test" with argument () set to []
+  start statement:   line=19 column=1
+  end statement:     line=19 column=20
+  source code:       def validate_test():
+                     ^^^^^^^^^^^^^^^^^^^^
+  method variables:  { result: None }
+  call trace:        validate_test()
   stack:             [{:}]
 
-Step 187:
-  program counter:   1309
-  hvm code:          Push ()
-  explanation:       building a tuple: push constant ()
-  start statement:   line=10 column=5
-  end statement:     line=10 column=34
-  source code:       print("call push", self, char)
-                           ^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, []]
+Step 180:
+  program counter:   1486
+  hvm code:          Push "call validate"
+  explanation:       push constant "call validate"
+  start statement:   line=20 column=5
+  end statement:     line=20 column=26
+  source code:       print("call validate")
+                           ^^^^^^^^^^^^^^^
+  stack:             [{:}, "call validate"]
 
-Step 188:
-  program counter:   1310
-  hvm code:          Push "call push"
-  explanation:       push constant "call push"
-  source code:       print("call push", self, char)
-                           ^^^^^^^^^^^
-  stack:             [{:}, [], "call push"]
-
-Step 189:
-  program counter:   1311
-  hvm code:          2-ary ListAdd
-  explanation:       pop 2 values ("call push", []); insert first value into the second; push result (["call push"])
-  source code:       print("call push", self, char)
-                           ^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [ "call push" ]]
-
-Step 190:
-  program counter:   1312
-  hvm code:          LoadVar self
-  explanation:       push value (2) of variable "self"
-  source code:       print("call push", self, char)
-                                        ^^^^
-  stack:             [{:}, [ "call push" ], 2]
-
-Step 191:
-  program counter:   1313
-  hvm code:          2-ary ListAdd
-  explanation:       pop 2 values (2, ["call push"]); insert first value into the second; push result (["call push", 2])
-  source code:       print("call push", self, char)
-                           ^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [ "call push", 2 ]]
-
-Step 192:
-  program counter:   1314
-  hvm code:          LoadVar char
-  explanation:       push value ("(") of variable "char"
-  source code:       print("call push", self, char)
-                                              ^^^^
-  stack:             [{:}, [ "call push", 2 ], "("]
-
-Step 193:
-  program counter:   1315
-  hvm code:          2-ary ListAdd
-  explanation:       pop 2 values ("(", ["call push", 2]); insert first value into the second; push result (["call push", 2, "("])
-  source code:       print("call push", self, char)
-                           ^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [ "call push", 2, "(" ]]
-
-Step 194:
-  program counter:   1316
+Step 181:
+  program counter:   1487
   hvm code:          Print
-  explanation:       pop value (["call push", 2, "("]) and add to print log
-  source code:       print("call push", self, char)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  call trace:        push_test(2, "(")
+  explanation:       pop value ("call validate") and add to print log
+  source code:       print("call validate")
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  call trace:        validate_test()
   stack:             [{:}]
 
-Step 195:
-  program counter:   1317
-  hvm code:          Push PC(989)
-  explanation:       push program counter constant 989 ("push")
-  start statement:   line=11 column=5
-  end statement:     line=11 column=24
-  source code:       stack.push(?s, char)
-                     ^^^^^^^^^^
-  stack:             [{:}, PC(989)]
+Step 182:
+  program counter:   1488
+  hvm code:          Push PC(1262)
+  explanation:       push program counter constant 1262 ("validate")
+  start statement:   line=21 column=5
+  end statement:     line=21 column=26
+  source code:       if stack.validate(?s):
+                        ^^^^^^^^^^^^^^
+  stack:             [{:}, PC(1262)]
 
-Step 196:
-  program counter:   1318
-  hvm code:          Push ()
-  explanation:       building a tuple: push constant ()
-  source code:       stack.push(?s, char)
-                                ^^^^^^^^
-  stack:             [{:}, PC(989), []]
-
-Step 197:
-  program counter:   1319
+Step 183:
+  program counter:   1489
   hvm code:          Push ?s
   explanation:       push constant ?s
-  source code:       stack.push(?s, char)
-                                 ^
-  stack:             [{:}, PC(989), [], ?s]
+  source code:       if stack.validate(?s):
+                                        ^
+  stack:             [{:}, PC(1262), ?s]
 
-Step 198:
-  program counter:   1320
-  hvm code:          2-ary ListAdd
-  explanation:       pop 2 values (?s, []); insert first value into the second; push result ([?s])
-  source code:       stack.push(?s, char)
-                                ^^^^^^^^
-  stack:             [{:}, PC(989), [ ?s ]]
-
-Step 199:
-  program counter:   1321
-  hvm code:          LoadVar char
-  explanation:       push value ("(") of variable "char"
-  source code:       stack.push(?s, char)
-                                    ^^^^
-  stack:             [{:}, PC(989), [ ?s ], "("]
-
-Step 200:
-  program counter:   1322
-  hvm code:          2-ary ListAdd
-  explanation:       pop 2 values ("(", [?s]); insert first value into the second; push result ([?s, "("])
-  source code:       stack.push(?s, char)
-                                ^^^^^^^^
-  stack:             [{:}, PC(989), [ ?s, "(" ]]
-
-Step 201:
-  program counter:   1323
+Step 184:
+  program counter:   1490
   hvm code:          Apply
-  explanation:       pop an argument ([?s, "("]) and a program counter value (989: "push") and call the method
-  source code:       stack.push(?s, char)
-                     ^^^^^^^^^^^^^^^^^^^^
-  call trace:        push_test(2, "(") --> push(?s, "(")
-  stack:             [{:}, 21186, [ ?s, "(" ]]
+  explanation:       pop an argument (?s) and a program counter value (1262: "validate") and call the method
+  source code:       if stack.validate(?s):
+                        ^^^^^^^^^^^^^^^^^^
+  call trace:        validate_test() --> validate(?s)
+  stack:             [{:}, 23858, ?s]
 
-Step 202:
-  program counter:   989
-  hvm code:          Frame push(s, c)
-  explanation:       method "push" with argument (s, c) set to [?s, "("]
-  file:              stackmon.hny
-  start statement:   line=23 column=1
-  end statement:     line=23 column=15
-  source code:       def push(s, c):
-                     ^^^^^^^^^^^^^^^
-  method variables:  { c: "(", result: None, s: ?s }
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }]
+Step 185:
+  program counter:   1262
+  hvm code:          Frame validate(s)
+  explanation:       method "validate" with argument s set to ?s
+  file:              stacksbs.hny
+  start statement:   line=70 column=1
+  end statement:     line=70 column=16
+  source code:       def validate(s):
+                     ^^^^^^^^^^^^^^^^
+  method variables:  { result: None, s: ?s }
+  stack:             [{:}, 23858, { "result": None }]
 
-Step 203:
-  program counter:   990
-  hvm code:          Push PC(695)
-  explanation:       push program counter constant 695 ("acquire")
-  start statement:   line=25 column=5
-  end statement:     line=25 column=22
+Step 186:
+  program counter:   1263
+  hvm code:          DelVar result
+  explanation:       delete method variable result
+  start statement:   line=72 column=3
+  end statement:     line=72 column=20
   source code:       acquire(?s->mutex)
                      ^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, PC(695)]
+  method variables:  { s: ?s }
 
-Step 204:
-  program counter:   991
+Step 187:
+  program counter:   1264
+  hvm code:          Push PC(695)
+  explanation:       push program counter constant 695 ("acquire")
+  start expression:  line=72 column=3
+  end expression:    line=72 column=9
+  stack:             [{:}, 23858, { "result": None }, PC(695)]
+
+Step 188:
+  program counter:   1265
   hvm code:          LoadVar s
   explanation:       push value (?s) of variable "s"
   source code:       acquire(?s->mutex)
                               ^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, PC(695), ?s]
+  stack:             [{:}, 23858, { "result": None }, PC(695), ?s]
 
-Step 205:
-  program counter:   992
+Step 189:
+  program counter:   1266
   hvm code:          Push "mutex"
   explanation:       push constant "mutex"
   source code:       acquire(?s->mutex)
                                  ^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, PC(695), ?s, "mutex"]
+  stack:             [{:}, 23858, { "result": None }, PC(695), ?s, "mutex"]
 
-Step 206:
-  program counter:   993
+Step 190:
+  program counter:   1267
   hvm code:          Address
   explanation:       pop a key ("mutex") and an address (?s) and push the combined address (?s["mutex"])
   source code:       acquire(?s->mutex)
                               ^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, PC(695), ?s["mutex"]]
+  stack:             [{:}, 23858, { "result": None }, PC(695), ?s["mutex"]]
 
-Step 207:
-  program counter:   994
+Step 191:
+  program counter:   1268
   hvm code:          Apply
   explanation:       pop an argument (?s["mutex"]) and a program counter value (695: "acquire") and call the method
   source code:       acquire(?s->mutex)
                      ^^^^^^^^^^^^^^^^^^
-  call trace:        push_test(2, "(") --> push(?s, "(") --> acquire(?s["mutex"])
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 15922, ?s["mutex"]]
+  call trace:        validate_test() --> validate(?s) --> acquire(?s["mutex"])
+  stack:             [{:}, 23858, { "result": None }, 20306, ?s["mutex"]]
 
-Step 208:
+Step 192:
   program counter:   695
   hvm code:          Frame acquire(binsema)
   explanation:       method "acquire" with argument binsema set to ?s["mutex"]
@@ -1856,25 +1652,25 @@ Step 208:
   source code:       def acquire(binsema):
                      ^^^^^^^^^^^^^^^^^^^^^
   method variables:  { binsema: ?s["mutex"], result: None }
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 15922, { "c": "(", "result": None, "s": ?s }]
+  stack:             [{:}, 23858, { "result": None }, 20306, { "s": ?s }]
 
-Step 209:
+Step 193:
   program counter:   696
   hvm code:          AtomicInc(lazy)
   explanation:       increment atomic counter from 0 to 1: becomes atomic
   start statement:   line=31 column=16
   end statement:     line=33 column=6
   source code:       atomically when not !binsema:
-  call trace:        push_test(2, "(") --> push(?s, "(") --> acquire(?s["mutex"])
+  call trace:        validate_test() --> validate(?s) --> acquire(?s["mutex"])
 
-Step 210:
+Step 194:
   program counter:   697
   hvm code:          ReadonlyInc
   explanation:       increment readonly counter from 0 to 1: becomes readonly
   start expression:  line=31 column=16
   end expression:    line=31 column=16
 
-Step 211:
+Step 195:
   program counter:   698
   hvm code:          LoadVar binsema
   explanation:       push value (?s["mutex"]) of variable "binsema"
@@ -1882,47 +1678,47 @@ Step 211:
   end statement:     line=31 column=32
   source code:       atomically when not !binsema:
                                           ^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 15922, { "c": "(", "result": None, "s": ?s }, ?s["mutex"]]
+  stack:             [{:}, 23858, { "result": None }, 20306, { "s": ?s }, ?s["mutex"]]
 
-Step 212:
+Step 196:
   program counter:   699
   hvm code:          Load
   explanation:       pop address of variable (?s["mutex"]) and push value (False)
   source code:       atomically when not !binsema:
                                          ^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 15922, { "c": "(", "result": None, "s": ?s }, False]
+  stack:             [{:}, 23858, { "result": None }, 20306, { "s": ?s }, False]
 
-Step 213:
+Step 197:
   program counter:   700
   hvm code:          1-ary not
   explanation:       pop a value (False); logical not; push result (True)
   source code:       atomically when not !binsema:
                                      ^^^^^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 15922, { "c": "(", "result": None, "s": ?s }, True]
+  stack:             [{:}, 23858, { "result": None }, 20306, { "s": ?s }, True]
 
-Step 214:
+Step 198:
   program counter:   701
   hvm code:          JumpCond False 703
   explanation:       pop value (True), compare to False, and jump to 703 if the same
   source code:       atomically when not !binsema:
                                 ^^^^^^^^^^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 15922, { "c": "(", "result": None, "s": ?s }]
+  stack:             [{:}, 23858, { "result": None }, 20306, { "s": ?s }]
 
-Step 215:
+Step 199:
   program counter:   702
   hvm code:          Jump 706
   explanation:       set program counter to 706
   source code:       atomically when not !binsema:
                                                 ^
 
-Step 216:
+Step 200:
   program counter:   706
   hvm code:          ReadonlyDec
   explanation:       decrement readonly counter from 1 to 0: no longer readonly
   source code:       atomically when not !binsema:
                                 ^^^^^^^^^^^^^^^^^
 
-Step 217:
+Step 201:
   program counter:   707
   hvm code:          LoadVar binsema
   explanation:       push value (?s["mutex"]) of variable "binsema"
@@ -1930,9 +1726,9 @@ Step 217:
   end statement:     line=32 column=23
   source code:       !binsema = True
                       ^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 15922, { "c": "(", "result": None, "s": ?s }, ?s["mutex"]]
+  stack:             [{:}, 23858, { "result": None }, 20306, { "s": ?s }, ?s["mutex"]]
 
-Step 218:
+Step 202:
   program counter:   708
   hvm code:          DelVar binsema
   explanation:       delete method variable binsema
@@ -1940,24 +1736,24 @@ Step 218:
   end expression:    line=32 column=16
   method variables:  { result: None }
 
-Step 219:
+Step 203:
   program counter:   709
   hvm code:          Push True
   explanation:       push constant True
   source code:       !binsema = True
                                 ^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 15922, { "c": "(", "result": None, "s": ?s }, ?s["mutex"], True]
+  stack:             [{:}, 23858, { "result": None }, 20306, { "s": ?s }, ?s["mutex"], True]
 
-Step 220:
+Step 204:
   program counter:   710
   hvm code:          Store
   explanation:       pop value (True) and address (?s["mutex"]) and store
   source code:       !binsema = True
                      ^^^^^^^^^^
-  shared variables:  { s: { "ever_negative": False, "max_size": 2, "mutex": True, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} } }
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 15922, { "c": "(", "result": None, "s": ?s }]
+  shared variables:  { s: { "ever_negative": False, "max_size": 2, "mutex": True, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": True }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } } }
+  stack:             [{:}, 23858, { "result": None }, 20306, { "s": ?s }]
 
-Step 221:
+Step 205:
   program counter:   711
   hvm code:          AtomicDec
   explanation:       decrement atomic counter from 1 to 0: no longer atomic
@@ -1966,7 +1762,7 @@ Step 221:
   source code:       atomically when not !binsema:
                                 ^^^^^^^^^^^^^^^^^
 
-Step 222:
+Step 206:
   program counter:   712
   hvm code:          Return
   explanation:       push result (None) and restore method variables
@@ -1974,239 +1770,630 @@ Step 222:
   end statement:     line=30 column=21
   source code:       def acquire(binsema):
                      ^^^^^^^^^^^^^^^^^^^^^
-  method variables:  { c: "(", result: None, s: ?s }
-  call trace:        push_test(2, "(") --> push(?s, "(")
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, None]
+  method variables:  { s: ?s }
+  call trace:        validate_test() --> validate(?s)
+  stack:             [{:}, 23858, { "result": None }, None]
 
-Step 223:
-  program counter:   995
+Step 207:
+  program counter:   1269
   hvm code:          Pop
   explanation:       pop and discard value (None)
-  file:              stackmon.hny
-  start statement:   line=25 column=5
-  end statement:     line=25 column=22
+  file:              stacksbs.hny
+  start statement:   line=72 column=3
+  end statement:     line=72 column=20
   source code:       acquire(?s->mutex)
                      ^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }]
+  stack:             [{:}, 23858, { "result": None }]
 
-Step 224:
-  program counter:   996
+Step 208:
+  program counter:   1270
   hvm code:          LoadVar s
   explanation:       push value (?s) of variable "s"
-  start statement:   line=26 column=5
-  end statement:     line=26 column=33
-  source code:       while s->size >= s->max_size:
-                           ^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s]
+  start statement:   line=73 column=3
+  end statement:     line=73 column=30
+  source code:       if ?s->size == ?s->max_size:
+                         ^
+  stack:             [{:}, 23858, { "result": None }, ?s]
 
-Step 225:
-  program counter:   997
+Step 209:
+  program counter:   1271
   hvm code:          Push "size"
   explanation:       push constant "size"
-  source code:       while s->size >= s->max_size:
-                              ^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s, "size"]
+  source code:       if ?s->size == ?s->max_size:
+                            ^^^^
+  stack:             [{:}, 23858, { "result": None }, ?s, "size"]
 
-Step 226:
-  program counter:   998
+Step 210:
+  program counter:   1272
   hvm code:          Address
   explanation:       pop a key ("size") and an address (?s) and push the combined address (?s["size"])
-  source code:       while s->size >= s->max_size:
-                           ^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["size"]]
+  source code:       if ?s->size == ?s->max_size:
+                         ^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, ?s["size"]]
 
-Step 227:
-  program counter:   999
-  hvm code:          Load
-  explanation:       pop address of variable (?s["size"]) and push value (0)
-  start expression:  line=26 column=11
-  end expression:    line=26 column=17
-  call trace:        push_test(2, "(") --> push(?s, "(")
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 0]
-
-Step 228:
-  program counter:   1000
+Step 211:
+  program counter:   1273
   hvm code:          LoadVar s
   explanation:       push value (?s) of variable "s"
-  source code:       while s->size >= s->max_size:
-                                      ^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 0, ?s]
+  source code:       if ?s->size == ?s->max_size:
+                                     ^
+  stack:             [{:}, 23858, { "result": None }, ?s["size"], ?s]
 
-Step 229:
-  program counter:   1001
+Step 212:
+  program counter:   1274
   hvm code:          Push "max_size"
   explanation:       push constant "max_size"
-  source code:       while s->size >= s->max_size:
-                                         ^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 0, ?s, "max_size"]
+  source code:       if ?s->size == ?s->max_size:
+                                        ^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, ?s["size"], ?s, "max_size"]
 
-Step 230:
-  program counter:   1002
+Step 213:
+  program counter:   1275
   hvm code:          Address
   explanation:       pop a key ("max_size") and an address (?s) and push the combined address (?s["max_size"])
-  source code:       while s->size >= s->max_size:
-                                      ^^^^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 0, ?s["max_size"]]
+  source code:       if ?s->size == ?s->max_size:
+                                     ^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, ?s["size"], ?s["max_size"]]
+
+Step 214:
+  program counter:   1276
+  hvm code:          2-ary ==
+  explanation:       pop 2 values (?s["max_size"], ?s["size"]); check if both values are the same; push result (False)
+  source code:       if ?s->size == ?s->max_size:
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, False]
+
+Step 215:
+  program counter:   1277
+  hvm code:          JumpCond False 1314
+  explanation:       pop value (False), compare to False, and jump to 1314 if the same
+  source code:       if ?s->size == ?s->max_size:
+                     ^^
+  stack:             [{:}, 23858, { "result": None }]
+
+Step 216:
+  program counter:   1314
+  hvm code:          LoadVar s
+  explanation:       push value (?s) of variable "s"
+  start statement:   line=79 column=3
+  end statement:     line=79 column=62
+  source code:       result = ((?s->ever_negative == False) and (?s->valid == 0))
+                                 ^
+  stack:             [{:}, 23858, { "result": None }, ?s]
+
+Step 217:
+  program counter:   1315
+  hvm code:          Push "ever_negative"
+  explanation:       push constant "ever_negative"
+  source code:       result = ((?s->ever_negative == False) and (?s->valid == 0))
+                                    ^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, ?s, "ever_negative"]
+
+Step 218:
+  program counter:   1316
+  hvm code:          Address
+  explanation:       pop a key ("ever_negative") and an address (?s) and push the combined address (?s["ever_negative"])
+  source code:       result = ((?s->ever_negative == False) and (?s->valid == 0))
+                                 ^^^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, ?s["ever_negative"]]
+
+Step 219:
+  program counter:   1317
+  hvm code:          Push False
+  explanation:       push constant False
+  source code:       result = ((?s->ever_negative == False) and (?s->valid == 0))
+                                                     ^^^^^
+  stack:             [{:}, 23858, { "result": None }, ?s["ever_negative"], False]
+
+Step 220:
+  program counter:   1318
+  hvm code:          2-ary ==
+  explanation:       pop 2 values (False, ?s["ever_negative"]); check if both values are the same; push result (False)
+  source code:       result = ((?s->ever_negative == False) and (?s->valid == 0))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, False]
+
+Step 221:
+  program counter:   1319
+  hvm code:          JumpCond False 1326
+  explanation:       pop value (False), compare to False, and jump to 1326 if the same
+  source code:       result = ((?s->ever_negative == False) and (?s->valid == 0))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }]
+
+Step 222:
+  program counter:   1326
+  hvm code:          Push False
+  explanation:       push constant False
+  start expression:  line=79 column=13
+  end expression:    line=79 column=61
+  stack:             [{:}, 23858, { "result": None }, False]
+
+Step 223:
+  program counter:   1327
+  hvm code:          StoreVar result
+  explanation:       pop value (False) and store locally in variable "result"
+  source code:       result = ((?s->ever_negative == False) and (?s->valid == 0))
+                     ^^^^^^^^
+  method variables:  { result: False, s: ?s }
+  stack:             [{:}, 23858, { "result": None }]
+
+Step 224:
+  program counter:   1328
+  hvm code:          Push PC(1335)
+  explanation:       push program counter constant 1335 ("release_one")
+  start statement:   line=81 column=3
+  end statement:     line=81 column=16
+  source code:       release_one(s)
+                     ^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, PC(1335)]
+
+Step 225:
+  program counter:   1329
+  hvm code:          LoadVar s
+  explanation:       push value (?s) of variable "s"
+  source code:       release_one(s)
+                                 ^
+  stack:             [{:}, 23858, { "result": None }, PC(1335), ?s]
+
+Step 226:
+  program counter:   1330
+  hvm code:          DelVar s
+  explanation:       delete method variable s
+  start expression:  line=81 column=15
+  end expression:    line=81 column=15
+  method variables:  { result: False }
+
+Step 227:
+  program counter:   1331
+  hvm code:          Apply
+  explanation:       pop an argument (?s) and a program counter value (1335: "release_one") and call the method
+  source code:       release_one(s)
+                     ^^^^^^^^^^^^^^
+  call trace:        validate_test() --> validate(?s) --> release_one(?s)
+  stack:             [{:}, 23858, { "result": None }, 21314, ?s]
+
+Step 228:
+  program counter:   1335
+  hvm code:          Frame release_one(s)
+  explanation:       method "release_one" with argument s set to ?s
+  start statement:   line=83 column=1
+  end statement:     line=83 column=19
+  source code:       def release_one(s):
+                     ^^^^^^^^^^^^^^^^^^^
+  method variables:  { result: None, s: ?s }
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }]
+
+Step 229:
+  program counter:   1336
+  hvm code:          LoadVar s
+  explanation:       push value (?s) of variable "s"
+  start statement:   line=84 column=3
+  end statement:     line=84 column=62
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                          ^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s]
+
+Step 230:
+  program counter:   1337
+  hvm code:          Push "size"
+  explanation:       push constant "size"
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                             ^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s, "size"]
 
 Step 231:
-  program counter:   1003
-  hvm code:          Load
-  explanation:       pop address of variable (?s["max_size"]) and push value (2)
-  start expression:  line=26 column=22
-  end expression:    line=26 column=32
-  call trace:        push_test(2, "(") --> push(?s, "(")
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, 0, 2]
+  program counter:   1338
+  hvm code:          Address
+  explanation:       pop a key ("size") and an address (?s) and push the combined address (?s["size"])
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                          ^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s["size"]]
 
 Step 232:
-  program counter:   1004
-  hvm code:          2-ary >=
-  explanation:       pop 2 values (2, 0); check if second value is greater than or equal to the first; push result (False)
-  source code:       while s->size >= s->max_size:
-                           ^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, False]
+  program counter:   1339
+  hvm code:          LoadVar s
+  explanation:       push value (?s) of variable "s"
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                      ^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s["size"], ?s]
 
 Step 233:
-  program counter:   1005
-  hvm code:          JumpCond False 1019
-  explanation:       pop value (False), compare to False, and jump to 1019 if the same
-  source code:       while s->size >= s->max_size:
-                     ^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }]
+  program counter:   1340
+  hvm code:          Push "max_size"
+  explanation:       push constant "max_size"
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                         ^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s["size"], ?s, "max_size"]
 
 Step 234:
-  program counter:   1019
-  hvm code:          LoadVar s
-  explanation:       push value (?s) of variable "s"
-  start statement:   line=29 column=5
-  end statement:     line=29 column=40
-  source code:       s->stack = list.append(?s->stack, c)
-                     ^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s]
+  program counter:   1341
+  hvm code:          Address
+  explanation:       pop a key ("max_size") and an address (?s) and push the combined address (?s["max_size"])
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                      ^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s["size"], ?s["max_size"]]
 
 Step 235:
-  program counter:   1020
-  hvm code:          Push "stack"
-  explanation:       push constant "stack"
-  source code:       s->stack = list.append(?s->stack, c)
-                        ^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s, "stack"]
+  program counter:   1342
+  hvm code:          2-ary !=
+  explanation:       pop 2 values (?s["max_size"], ?s["size"]); check if the values are unequal; push result (True)
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                         ^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, True]
 
 Step 236:
-  program counter:   1021
-  hvm code:          Address
-  explanation:       pop a key ("stack") and an address (?s) and push the combined address (?s["stack"])
-  source code:       s->stack = list.append(?s->stack, c)
-                     ^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"]]
+  program counter:   1343
+  hvm code:          JumpCond False 1352
+  explanation:       pop value (True), compare to False, and jump to 1352 if the same
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }]
 
 Step 237:
-  program counter:   1022
-  hvm code:          Push ?stack$list
-  explanation:       push constant ?stack$list
-  source code:       s->stack = list.append(?s->stack, c)
-                                ^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list]
-
-Step 238:
-  program counter:   1023
-  hvm code:          Push "append"
-  explanation:       push constant "append"
-  source code:       s->stack = list.append(?s->stack, c)
-                                    ^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list, "append"]
-
-Step 239:
-  program counter:   1024
-  hvm code:          Address
-  explanation:       pop a key ("append") and an address (?stack$list) and push the combined address (?stack$list["append"])
-  source code:       s->stack = list.append(?s->stack, c)
-                                ^^^^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list["append"]]
-
-Step 240:
-  program counter:   1025
-  hvm code:          Push ()
-  explanation:       building a tuple: push constant ()
-  source code:       s->stack = list.append(?s->stack, c)
-                                            ^^^^^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list["append"], []]
-
-Step 241:
-  program counter:   1026
+  program counter:   1344
   hvm code:          LoadVar s
   explanation:       push value (?s) of variable "s"
-  source code:       s->stack = list.append(?s->stack, c)
-                                             ^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list["append"], [], ?s]
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                                         ^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s]
+
+Step 238:
+  program counter:   1345
+  hvm code:          Push "push_gate"
+  explanation:       push constant "push_gate"
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                                            ^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s, "push_gate"]
+
+Step 239:
+  program counter:   1346
+  hvm code:          Address
+  explanation:       pop a key ("push_gate") and an address (?s) and push the combined address (?s["push_gate"])
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                                         ^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s["push_gate"]]
+
+Step 240:
+  program counter:   1347
+  hvm code:          Push "count"
+  explanation:       push constant "count"
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                                                     ^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s["push_gate"], "count"]
+
+Step 241:
+  program counter:   1348
+  hvm code:          Address
+  explanation:       pop a key ("count") and an address (?s["push_gate"]) and push the combined address (?s["push_gate"]["count"])
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                                         ^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s["push_gate"]["count"]]
 
 Step 242:
-  program counter:   1027
-  hvm code:          Push "stack"
-  explanation:       push constant "stack"
-  source code:       s->stack = list.append(?s->stack, c)
-                                                ^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list["append"], [], ?s, "stack"]
+  program counter:   1349
+  hvm code:          Push 0
+  explanation:       push constant 0
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                                                              ^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, ?s["push_gate"]["count"], 0]
 
 Step 243:
-  program counter:   1028
-  hvm code:          Address
-  explanation:       pop a key ("stack") and an address (?s) and push the combined address (?s["stack"])
-  source code:       s->stack = list.append(?s->stack, c)
-                                             ^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list["append"], [], ?s["stack"]]
+  program counter:   1350
+  hvm code:          2-ary >
+  explanation:       pop 2 values (0, ?s["push_gate"]["count"]); check if second value is greater than the first; push result (True)
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, True]
 
 Step 244:
-  program counter:   1029
-  hvm code:          2-ary ListAdd
-  explanation:       pop 2 values (?s["stack"], []); insert first value into the second; push result ([?s["stack"]])
-  source code:       s->stack = list.append(?s->stack, c)
-                                            ^^^^^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list["append"], [ ?s["stack"] ]]
+  program counter:   1351
+  hvm code:          Jump 1353
+  explanation:       set program counter to 1353
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                                                   ^^^
 
 Step 245:
-  program counter:   1030
-  hvm code:          LoadVar c
-  explanation:       push value ("(") of variable "c"
-  source code:       s->stack = list.append(?s->stack, c)
-                                                       ^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list["append"], [ ?s["stack"] ], "("]
+  program counter:   1353
+  hvm code:          JumpCond False 1364
+  explanation:       pop value (True), compare to False, and jump to 1364 if the same
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                     ^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }]
 
 Step 246:
-  program counter:   1031
-  hvm code:          2-ary ListAdd
-  explanation:       pop 2 values ("(", [?s["stack"]]); insert first value into the second; push result ([?s["stack"], "("])
-  source code:       s->stack = list.append(?s->stack, c)
-                                            ^^^^^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list["append"], [ ?s["stack"], "(" ]]
+  program counter:   1354
+  hvm code:          Push PC(714)
+  explanation:       push program counter constant 714 ("release")
+  start statement:   line=85 column=5
+  end statement:     line=85 column=31
+  source code:       release(?s->push_gate.sema)
+                     ^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, PC(714)]
 
 Step 247:
-  program counter:   1032
-  hvm code:          Address
-  explanation:       pop a key ([?s["stack"], "("]) and an address (?stack$list["append"]) and push the combined address (?stack$list["append"][[?s["stack"], "("]])
-  source code:       s->stack = list.append(?s->stack, c)
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"], ?stack$list["append"][[ ?s["stack"], "(" ]]]
+  program counter:   1355
+  hvm code:          LoadVar s
+  explanation:       push value (?s) of variable "s"
+  source code:       release(?s->push_gate.sema)
+                              ^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, PC(714), ?s]
 
 Step 248:
-  program counter:   1033
+  program counter:   1356
+  hvm code:          DelVar s
+  explanation:       delete method variable s
+  start expression:  line=85 column=14
+  end expression:    line=85 column=14
+  method variables:  { result: None }
+
+Step 249:
+  program counter:   1357
+  hvm code:          Push "push_gate"
+  explanation:       push constant "push_gate"
+  source code:       release(?s->push_gate.sema)
+                                 ^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, PC(714), ?s, "push_gate"]
+
+Step 250:
+  program counter:   1358
+  hvm code:          Address
+  explanation:       pop a key ("push_gate") and an address (?s) and push the combined address (?s["push_gate"])
+  source code:       release(?s->push_gate.sema)
+                              ^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, PC(714), ?s["push_gate"]]
+
+Step 251:
+  program counter:   1359
+  hvm code:          Push "sema"
+  explanation:       push constant "sema"
+  source code:       release(?s->push_gate.sema)
+                                          ^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, PC(714), ?s["push_gate"], "sema"]
+
+Step 252:
+  program counter:   1360
+  hvm code:          Address
+  explanation:       pop a key ("sema") and an address (?s["push_gate"]) and push the combined address (?s["push_gate"]["sema"])
+  source code:       release(?s->push_gate.sema)
+                              ^^^^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, PC(714), ?s["push_gate"]["sema"]]
+
+Step 253:
+  program counter:   1361
+  hvm code:          Apply
+  explanation:       pop an argument (?s["push_gate"]["sema"]) and a program counter value (714: "release") and call the method
+  source code:       release(?s->push_gate.sema)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  call trace:        validate_test() --> validate(?s) --> release_one(?s) --> release(?s["push_gate"]["sema"])
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, 21794, ?s["push_gate"]["sema"]]
+
+Step 254:
+  program counter:   714
+  hvm code:          Frame release(binsema)
+  explanation:       method "release" with argument binsema set to ?s["push_gate"]["sema"]
+  file:              /opt/homebrew/lib/python3.10/site-packages/harmony_model_checker/modules/synch.hny
+  start statement:   line=34 column=1
+  end statement:     line=34 column=21
+  source code:       def release(binsema):
+                     ^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { binsema: ?s["push_gate"]["sema"], result: None }
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, 21794, { "result": None }]
+
+Step 255:
+  program counter:   715
+  hvm code:          AtomicInc(lazy)
+  explanation:       increment atomic counter from 0 to 1: becomes atomic
+  start statement:   line=35 column=5
+  end statement:     line=35 column=15
+  source code:       atomically:
+                     ^^^^^^^^^^
+  call trace:        validate_test() --> validate(?s) --> release_one(?s) --> release(?s["push_gate"]["sema"])
+
+Step 256:
+  program counter:   716
+  hvm code:          ReadonlyInc
+  explanation:       increment readonly counter from 0 to 1: becomes readonly
+  start statement:   line=36 column=9
+  end statement:     line=36 column=23
+  source code:       assert !binsema
+                     ^^^^^^^^^^^^^^^
+
+Step 257:
+  program counter:   717
+  hvm code:          AtomicInc(lazy)
+  explanation:       increment atomic counter from 1 to 2: remains atomic
+  start expression:  line=36 column=9
+  end expression:    line=36 column=23
+
+Step 258:
+  program counter:   718
+  hvm code:          LoadVar binsema
+  explanation:       push value (?s["push_gate"]["sema"]) of variable "binsema"
+  source code:       assert !binsema
+                             ^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, 21794, { "result": None }, ?s["push_gate"]["sema"]]
+
+Step 259:
+  program counter:   719
   hvm code:          Load
-  explanation:       pop an address and push the value at the address
-  start expression:  line=29 column=16
-  end expression:    line=29 column=40
-  call trace:        push_test(2, "(") --> push(?s, "(")
+  explanation:       pop address of variable (?s["push_gate"]["sema"]) and push value (True)
+  source code:       assert !binsema
+                            ^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, 21794, { "result": None }, True]
+
+Step 260:
+  program counter:   720
+  hvm code:          Assert
+  explanation:       pop a value (True); do not raise exception
+  source code:       assert !binsema
+                     ^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, 21794, { "result": None }]
+
+Step 261:
+  program counter:   721
+  hvm code:          AtomicDec
+  explanation:       decrement atomic counter from 2 to 1: remains atomic
+  source code:       assert !binsema
+                     ^^^^^^^^^^^^^^^
+
+Step 262:
+  program counter:   722
+  hvm code:          ReadonlyDec
+  explanation:       decrement readonly counter from 1 to 0: no longer readonly
+  start expression:  line=36 column=9
+  end expression:    line=36 column=23
+
+Step 263:
+  program counter:   723
+  hvm code:          LoadVar binsema
+  explanation:       push value (?s["push_gate"]["sema"]) of variable "binsema"
+  start statement:   line=37 column=9
+  end statement:     line=37 column=24
+  source code:       !binsema = False
+                      ^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, 21794, { "result": None }, ?s["push_gate"]["sema"]]
+
+Step 264:
+  program counter:   724
+  hvm code:          DelVar binsema
+  explanation:       delete method variable binsema
+  start expression:  line=37 column=10
+  end expression:    line=37 column=16
+  method variables:  { result: None }
+
+Step 265:
+  program counter:   725
+  hvm code:          Push False
+  explanation:       push constant False
+  source code:       !binsema = False
+                                ^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, 21794, { "result": None }, ?s["push_gate"]["sema"], False]
+
+Step 266:
+  program counter:   726
+  hvm code:          Store
+  explanation:       pop value (False) and address (?s["push_gate"]["sema"]) and store
+  source code:       !binsema = False
+                     ^^^^^^^^^^
+  shared variables:  { s: { "ever_negative": False, "max_size": 2, "mutex": True, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": False }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } } }
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, 21794, { "result": None }]
+
+Step 267:
+  program counter:   727
+  hvm code:          AtomicDec
+  explanation:       decrement atomic counter from 1 to 0: no longer atomic
+  start statement:   line=35 column=5
+  end statement:     line=35 column=15
+  source code:       atomically:
+                     ^^^^^^^^^^^
+
+Step 268:
+  program counter:   728
+  hvm code:          Return
+  explanation:       push result (None) and restore method variables
+  start statement:   line=34 column=1
+  end statement:     line=34 column=21
+  source code:       def release(binsema):
+                     ^^^^^^^^^^^^^^^^^^^^^
+  call trace:        validate_test() --> validate(?s) --> release_one(?s)
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }, None]
+
+Step 269:
+  program counter:   1362
+  hvm code:          Pop
+  explanation:       pop and discard value (None)
+  file:              stacksbs.hny
+  start statement:   line=85 column=5
+  end statement:     line=85 column=31
+  source code:       release(?s->push_gate.sema)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }, 21314, { "result": False }]
+
+Step 270:
+  program counter:   1363
+  hvm code:          Jump 1427
+  explanation:       set program counter to 1427
+  start statement:   line=84 column=3
+  end statement:     line=84 column=62
+  source code:       if (?s->size != ?s->max_size) and (?s->push_gate.count > 0):
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Step 271:
+  program counter:   1427
+  hvm code:          Return
+  explanation:       push result (None) and restore method variables
+  start statement:   line=83 column=1
+  end statement:     line=83 column=19
+  source code:       def release_one(s):
+                     ^^^^^^^^^^^^^^^^^^^
+  method variables:  { result: False }
+  call trace:        validate_test() --> validate(?s)
+  stack:             [{:}, 23858, { "result": None }, None]
+
+Step 272:
+  program counter:   1332
+  hvm code:          Pop
+  explanation:       pop and discard value (None)
+  start statement:   line=81 column=3
+  end statement:     line=81 column=16
+  source code:       release_one(s)
+                     ^^^^^^^^^^^^^^
+  stack:             [{:}, 23858, { "result": None }]
+
+Step 273:
+  program counter:   1333
+  hvm code:          Return
+  explanation:       push result (False) and restore method variables
+  start statement:   line=70 column=1
+  end statement:     line=70 column=16
+  source code:       def validate(s):
+                     ^^^^^^^^^^^^^^^^
+  method variables:  { result: None }
+  call trace:        validate_test()
+  stack:             [{:}, False]
+
+Step 274:
+  program counter:   1491
+  hvm code:          JumpCond False 1495
+  explanation:       pop value (False), compare to False, and jump to 1495 if the same
+  file:              stacktest.hny
+  start statement:   line=21 column=5
+  end statement:     line=21 column=26
+  source code:       if stack.validate(?s):
+                     ^^
+  stack:             [{:}]
+
+Step 275:
+  program counter:   1495
+  hvm code:          Push "boo :("
+  explanation:       push constant "boo :("
+  start statement:   line=24 column=7
+  end statement:     line=24 column=21
+  source code:       print("boo :(")
+                           ^^^^^^^^
+  stack:             [{:}, "boo :("]
+
+Step 276:
+  program counter:   1496
+  hvm code:          Print
+  explanation:       pop value ("boo :(") and add to print log
+  source code:       print("boo :(")
+                     ^^^^^^^^^^^^^^^
+  call trace:        validate_test()
   new mode:          failed
-  stack:             [{:}, 21186, { "char": "(", "result": None, "self": 2 }, ?s["stack"]]
-  operation failed:  Load: unknown address ?stack$list["append"][[?s["stack"], "("]]
+  stack:             [{:}]
+  operation failed:  Behavior failure on "boo :("
 
 ================================================
 Final state
 ================================================
 Threads:
-  T0: pc=1418 terminated atomic __init__()
-  T1: pc=1308 runnable push_test(1, "(")
-  T2: pc=1033 failed push_test(2, "(") --> push(?s, "(")
-  T3: pc=1308 runnable push_test(1, ")")
-  T4: pc=1337 runnable pop_test(1)
-  T5: pc=1360 runnable validate_test()
+  T0: pc=1543 terminated atomic __init__()
+  T1: pc=1433 runnable push_test(1, "(")
+  T2: pc=1433 runnable push_test(2, "(")
+  T3: pc=1433 runnable push_test(1, ")")
+  T4: pc=1462 runnable pop_test(1)
+  T5: pc=1496 failed validate_test()
 Variables:
-  s: { "ever_negative": False, "max_size": 2, "mutex": True, "pop_cond": {:}, "problem_index": -1, "push_cond": {:}, "size": 0, "stack": [], "valid": 0, "valid_cond": {:} }
+  s: { "ever_negative": False, "max_size": 2, "mutex": True, "pop_gate": { "count": 0, "sema": True }, "problem_index": -1, "push_gate": { "count": 0, "sema": False }, "size": 0, "stack": [], "valid": 0, "validate_gate": { "count": 0, "sema": True } }

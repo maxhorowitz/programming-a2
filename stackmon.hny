@@ -1,4 +1,5 @@
 from synch import *
+import list
 
 def Stack(l):
   # return an empty stack with maximum size l
@@ -26,20 +27,20 @@ def push(s, c):
     while s->size >= s->max_size:
       wait(?s->push_cond, ?s->mutex)
     #push to stack
-    s->stack = list.append(?s->stack, c)
+    s->stack = s-> stack + [c,]
     # update stack auxillary variables
     s->size += 1
     if c == "(":
         s->valid += 1
     elif c == ")":
         s->valid -= 1
-    if ((valid < 0) and (not s.ever_negative)):
+    if ((s->valid < 0) and (not s->ever_negative)):
         s->ever_negative = True
-        s->problem_index = (s.size-1)
+        s->problem_index = (s->size-1)
         
     #release logic
     notify(?s->pop_cond)
-    if s.size == s.max_size:
+    if s->size == s->max_size:
         notify(?s->valid_cond)
     release(?s->mutex)
 
@@ -51,7 +52,7 @@ def pop(s):
         wait(?s->pop_cond, ?s->mutex)
 
     #pop logic
-    let rev = list.reversed(s.stack):
+    let rev = list.reversed(s->stack):
         result = list.head(rev)
         s->stack = list.reversed(list.tail(rev))
         # update stack auxillary variables
@@ -60,7 +61,7 @@ def pop(s):
             s->valid -= 1
         elif result == ")":
             s->valid += 1
-        if s.size == s.problem_index:
+        if s->size == s->problem_index:
             s->problem_index = -1
             s->ever_negative = False
     #release lock
@@ -73,6 +74,6 @@ def validate(s):
   while s->size != s->max_size:
       wait(?s->valid_cond, ?s->mutex)
   # BEGIN validation logic
-  result = ((s.ever_negative == false) and (s.valid == 0))
+  result = ((s->ever_negative == False) and (s->valid == 0))
   # END validation logic
   release(?s->mutex)

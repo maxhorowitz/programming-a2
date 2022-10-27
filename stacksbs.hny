@@ -1,4 +1,5 @@
 from synch import BinSema, acquire, release
+import list
 
 def Stack(l):
   # return an empty stack with maximum size l
