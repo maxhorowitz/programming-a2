@@ -9,26 +9,25 @@ def Stack(l):
     .push_gate: { .sema: BinSema(True), .count: 0 },
     .pop_gate: { .sema: BinSema(True), .count: 0 },
     .validate_gate: { .sema: BinSema(True), .count: 0 },
-    .ncs: 0 #number of people in critical section
 
     # EVERYTHING HERE HAS TO DO WITH STACK:
-    .stack: []
+    .stack: [],
     .size: 0, # how do we make sure the max size is l
     .max_size: l, # capture maxSize parameter
     .valid: 0,#+1 to this when '(' and -1 when ')'
     .ever_negative: False, #whenever pushing, check after if valid is negative and if so make True
+    .problem_index: -1
 
   }
 
 def push(s, c):
   # wait until the stack is not full, then push c onto !s
   acquire(?s->mutex)
-  if (?s->ncs > 0):
+  if s->size < s->max_size:
     ?s->push_gate.count += 1
     release_one(s)
     acquire(?s->push_gate.sema)
     ?s->push_gate.count -= 1
-  ?s->ncs += 1
   # BEGIN push logic
   s.stack = list.append(s.stack, c)
   # update stack auxillary variables
@@ -79,16 +78,16 @@ def validate(s):
     ?s->validate_gate.count -= 1
   ?s->ncs += 1
   # BEGIN validation logic
-  result = (s.ever_negative == false && s.valid == 0)
+  result = (s.ever_negative == false) and (s.valid == 0)
   # END validation logic
   release_one(s)
 
 def release_one(s):
-  if (?s->ncs == 0 && ?s->size != ?s ->maxsize && ?s->push_gate.count > 0):
+  if (?s->size != ?s ->maxsize) and (?s->push_gate.count > 0):
     release(?s->push_gate.sema)
-  elif (?s->ncs == 0 && ?s->size != 0 && ?s->pop_gate.count > 0):
+  elif (?s->size != 0) and (?s->pop_gate.count > 0):
     release(?s->pop_gate.sema)
-  elif (?s->ncs == 0 && ?s->size == ?s ->maxsize && ?s->validate_gate.count > 0):
+  elif (?s->size == ?s ->maxsize) and (?s->validate_gate.count > 0):
     release(?s->validate_gate.sema)
   else:
     release(?s->mutex)

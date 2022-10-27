@@ -7,7 +7,7 @@ def Stack(l):
         .max_size: l, # capture maxSize parameter
         .valid: 0,#+1 to this when '(' and -1 when ')'
         .ever_negative: False, #whenever pushing, check after if valid is negative and if so make True
-        .problem_index: -1,
+        .problem_index: -1
     }
 
 def push(s, c):
@@ -39,4 +39,4 @@ def pop(s):
 
 def validate(s):
     atomically when s.size == s.max_size:
-        result = (s.ever_negative == false && s.valid == 0)
+        result = (not s.ever_negative) and (s.valid == 0)
