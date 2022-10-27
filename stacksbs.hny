@@ -25,7 +25,7 @@ def push(s, c):
   acquire(?s->mutex)
   if s->size < s->max_size:
     ?s->push_gate.count += 1
-    release_one(s)
+    release(?s->mutex)
     acquire(?s->push_gate.sema)
     ?s->push_gate.count -= 1
   # BEGIN push logic
@@ -47,7 +47,7 @@ def pop(s):
   acquire(?s->mutex)
   if s->size > 0:
     ?s->pop_gate.count += 1
-    release_one(s)
+    release(?s->mutex)
     acquire(?s->pop_gate.sema)
     ?s->pop_gate.count -= 1
   # BEGIN pop logic
@@ -72,7 +72,7 @@ def validate(s):
   acquire(?s->mutex)
   if s->size == s->max_size:
     ?s->validate_gate.count += 1
-    release_one(s)
+    release(?s->mutex)
     acquire(?s->validate_gate.sema)
     ?s->validate_gate.count -= 1
   # BEGIN validation logic
