@@ -1,3 +1,6 @@
+Programming Assignment 2 - CS 4410
+Patrick Lyons (pml84), Samuel Aberman (sa685), Max Horowitz (mgh68)
+
 Starvation.
 
 For both stacksbs and stackmon there is a possibility of starvation of the validate calls.
