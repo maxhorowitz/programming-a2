@@ -24,11 +24,12 @@ def Stack(l):
 def push(s, c):
   # wait until the stack is not full, then push c onto !s
   acquire(?s->mutex)
-  if s->size < s->max_size:
+  if (not (s->size < s->max_size)):
     s->push_gate.count += 1
     release(?s->mutex)
-    acquire(?s->push_gate->sema)
+    acquire(?s->push_gate.sema)
     s->push_gate.count -= 1
+
   # BEGIN push logic
   s->stack = list.append(s->stack, c)
   # update stack auxillary variables
@@ -46,7 +47,7 @@ def push(s, c):
 def pop(s):
   # wait until a stack is non-empty and then remove and return the top of the stack
   acquire(?s->mutex)
-  if s->size > 0:
+  if (not (s->size > 0)):
     s->pop_gate.count += 1
     release(?s->mutex)                                                            
     acquire(?s->pop_gate.sema)
@@ -70,7 +71,7 @@ def pop(s):
 def validate(s):
   # wait until stack !s is full, then check if its valid
   acquire(?s->mutex)
-  if s->size == s->max_size:
+  if (not (s->size == s->max_size)):
     s->validate_gate.count += 1
     release(?s->mutex)
     acquire(?s->validate_gate.sema)
